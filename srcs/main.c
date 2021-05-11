@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/09 21:15:05 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/11 12:21:50 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,14 @@ void		free_memory(t_info *info)
 {
 	free_paths(info);
 	free_matrices(info);
+	if (info->sp_buf != NULL)
+		safe_free(info->sp_buf);
+	if (info->sp_dist != NULL)
+		safe_free(info->sp_dist);
+	if (info->sp_ordr != NULL)
+		safe_free(info->sp_ordr);
+	if (info->sprt != NULL)
+		safe_free(info->sprt);
 	if (info->img.img != NULL)
 		mlx_destroy_image(info->mlx, info->img.img);	
 	if (info->win != NULL)
@@ -347,8 +355,7 @@ void	init_paths(t_info *info, char *line, int fd)
 
 void	floodfill(t_info *info, int tmp_map[info->row_count][info->col_count], int x, int y)
 {
-//	printf("x: %d, y: %d\n", x, y);
-	if (x == 0 || x >= info->row_count || y <= 0 || y == info->col_count)	
+	if (x == 0 || x >= info->row_count - 1 || y == 0 || y >= info->col_count - 1)
 		free_exit(info, "map is not closed");
 	tmp_map[x][y] = '#';
 	if (tmp_map[x - 1][y] != 1 && tmp_map[x - 1][y] != '#')
@@ -373,13 +380,11 @@ void	check_closed_map(t_info *info, int x, int y)
 		j = 0;
 		while (j < info->col_count)
 		{
-			tmp_map[i][j] = info->map[i][j];
-			printf("%d", tmp_map[i][j]);
+			tmp_map[i][j] = info->map[i][j];	
 			j++;
-		}
-		printf("\n");
+		}	
 		i++;
-	}	
+	}
 	floodfill(info, tmp_map, x, y);
 }
 
@@ -458,59 +463,58 @@ void	set_start(t_info *info, char strt)
 	info->map[info->row][info->col] = 0;
 }
 
-void	init_map_row(t_info *info, int fd, char * line, int row)
+void	init_map_row(t_info *info, int fd, char * line)
 {
 	int len;
 	int tmp;
 
-	info->col = 0;
-	len = ft_strlen(line);
+	info->col = 0;	
+	len = ft_strlen(line);	
 	if (!(info->map[info->row] = (int *)malloc(sizeof(int) * info->col_count)))
 		free_line(info, fd, line, "Memory allocation error");
 	info->map_flag++;
 	tmp = len;
 	len--;
 	while (tmp < info->col_count)
-	{
-		info->map[info->row][info->col++] = 0;
-		//printf("%d", info->map[info->row][info->col]);
+	{	
+		info->map[info->row][info->col] = 0;
+		info->col++;
 		tmp++;
 	}
 	while (len >= 0)
 	{
+		
+		if (line[len] == '2')
+			info->sp_count++;
 		if (is_start(line[len]))
-			set_start(info, line[len]);
-		else if ((line[len] == ' ' && row == 0))
-			info->map[info->row][info->col] = 1;
+			set_start(info, line[len]);	
 		else if (line[len] == ' ')
 			info->map[info->row][info->col] = 0;
 		else 
 			info->map[info->row][info->col] = line[len] - '0';	
 		if (info->map[info->row][info->col] > 2)
 			free_line(info, fd, line, "invalid character in map");	
-		//printf("%d", info->map[info->row][info->col]);
 		info->col++;
 		len--;
 	}	
 	while (info->col < info->col_count)
 	{	
 		info->map[info->row][info->col] = 0;
-		//printf("%d", info->map[info->row][info->col]);
 		info->col++;
 	}
-	//printf("\n");
 }
 
 void	init_map(int ret, t_info *info, int fd, char *line)
 {
 	info->start = '\0';
 	info->row = 0;
+	info->sp_count = 0;
 	if (!(info->map = (int **)malloc(sizeof(int *) * info->row_count)))
 		free_line(info, fd, line, "Memory allocation error");
 	info->map_flag++;
 	while (ret != 0)
 	{	
-		init_map_row(info, fd, line, info->row);
+		init_map_row(info, fd, line);
 		safe_free(line);
 		if ((ret = get_next_line(fd, &line)) == -1)
 			free_line(info, fd, line, "cannot read .cub file");
@@ -593,7 +597,7 @@ void	digital_differential_analyzer(t_info *info, t_ray *r)
 			r->map.y += r->step.y;
 			r->side = 1;
 		}
-		if (info->map[(int)r->map.x][(int)r->map.y] == 1)
+		if (info->map[(int)r->map.x][(int)r->map.y] == 1) 
 			r->hit = 1;
 	}	
 }
@@ -652,7 +656,7 @@ void	select_which_texture(t_info *info, t_ray *r)
 	else if (r->side == 1 && r->step.y > 0)
 		info->tex_num = 2;
 	else if (r->side == 1 && r->step.y < 0)
-		info->tex_num = 3;
+		info->tex_num = 3;	
 }
 
 void	calculate_texture_stripe(t_info *info, t_ray *r)
@@ -695,6 +699,157 @@ void	draw_buffer(t_info *info, t_ray r, int stripe)
 		info->buf[floor++][stripe] = info->f_color;
 }
 
+void	locate_sprites(t_info *info)
+{
+	int i;
+	int j;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (i < info->row_count)
+	{
+		j = 0;
+		while (j < info->col_count)
+		{	
+			if (info->map[i][j] == 2)
+			{
+				info->sprt[count].x = i + .5;
+				info->sprt[count].y = j + .5;	
+				count++;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	calc_sprite_dist(t_info *info)
+{
+	int i;
+
+	i = 0;
+	while (i < info->sp_count)
+	{
+		info->sp_ordr[i] = i;
+		info->sp_dist[i] =
+		((info->pos.x - info->sprt[i].x) *
+		(info->pos.x - info->sprt[i].x) +
+		(info->pos.y - info->sprt[i].y) *
+		(info->pos.y - info->sprt[i].y));	
+		i++;
+	}
+}
+
+void	arrange_sprites(t_info *info, t_pair *sp)
+{
+	t_pair	tmp;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < info->sp_count)
+	{
+		j = 0;
+		while (j < info->sp_count - 1)
+		{
+			if (sp[j].first > sp[j + 1].first)
+			{
+				tmp.first = sp[j].first;
+				tmp.second = sp[j].second;
+				sp[j].first = sp[j + 1].first;
+				sp[j].second = sp[j + 1].second;
+				sp[j + 1].first = tmp.first;
+				sp[j + 1].second = tmp.second;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	sort_sprites(t_info *info)
+{
+	t_pair *sp;
+	int i;
+
+	i = 0;
+	if (!(sp = (t_pair*)malloc(sizeof(t_pair) * info->sp_count)))
+		free_exit(info, "could not allocate memory");	
+	while (i < info->sp_count)
+	{
+		sp[i].first = info->sp_dist[i];
+		sp[i].second = info->sp_ordr[i];
+		i++;
+	}
+	arrange_sprites(info, sp);
+	i = 0;
+	while (i < info->sp_count)
+	{
+		info->sp_dist[i] = sp[info->sp_count - i - 1].first;
+		info->sp_ordr[i] = sp[info->sp_count - i - 1].second;	
+		i++;
+	}
+	safe_free(sp);
+}
+
+void	draw_sprites(t_info *info)
+{
+	t_sprite	s;
+	int		i;
+	int		stripe;
+
+	i = 0;
+	locate_sprites(info);
+	calc_sprite_dist(info);
+	sort_sprites(info);
+	while (i < info->sp_count)
+	{
+		s.loc.x = info->sprt[info->sp_ordr[i]].x - info->pos.x;
+		s.loc.y = info->sprt[info->sp_ordr[i]].y - info->pos.y;
+		s.inv_det = 1.0 / (info->cam.x * info->dir.y - info->dir.x * info->cam.y);
+		s.mod.x = s.inv_det * (info->dir.y * s.loc.x - info->dir.x * s.loc.y);
+		s.mod.y = s.inv_det * (-info->cam.y * s.loc.x + info->cam.x * s.loc.y);
+		s.screen = (int)((info->wid / 2) * (1 + s.mod.x / s.mod.y));
+		s.mv_screen = (int)(0.0 / s.mod.y);
+		s.hght = (int)fabs((info->hght / s.mod.y) / 1);
+		s.draw_start.y = -s.hght / 2 + info->hght / 2 + 0.0;
+		if (s.draw_start.y < 0)
+			s.draw_start.y = 0;
+		s.draw_end.y = s.hght / 2 + info->hght / 2 + 0.0;
+		if (s.draw_end.y >= info->hght)
+			s.draw_end.y = info->hght - 1;
+		s.wid = (int)fabs((info->hght / s.mod.y) / 1);
+		s.draw_start.x = -s.wid / 2 + s.screen;
+		if (s.draw_start.x < 0)
+			s.draw_start.x = 0;
+		s.draw_end.x = s.wid / 2 + s.screen;
+		if (s.draw_end.x >= info->wid)
+			s.draw_end.x = info->wid - 1;
+		stripe = s.draw_start.x;
+		while (stripe < s.draw_end.x)
+		{
+			s.tex.x = (int)((256 * (stripe - (-s.wid / 2 + s.screen)) * TEX_WID / s.wid) / 256);
+			if (s.mod.y > 0 && stripe > 0 && stripe < info->wid && s.mod.y < info->sp_buf[stripe])
+			{
+				s.col = s.draw_start.y;
+				while (s.col < s.draw_end.y)
+				{
+					s.d = (s.col - s.mv_screen) * 256 - info->hght * 128 + s.hght * 128;
+					s.tex.y = ((s.d * TEX_HGHT) / s.hght) / 256;
+					s.color = info->texture[4][TEX_WID * s.tex.y + s.tex.x];
+					if ((s.color & 0X00FFFFFF) != 0)
+						info->buf[s.col][stripe] = s.color;
+					s.col++;
+				}
+			
+			} 
+			stripe++;
+		}
+		i++;
+	}
+}
+
 void	configure_image(t_info *info)
 {
 	t_ray	r;
@@ -709,8 +864,11 @@ void	configure_image(t_info *info)
 		select_which_texture(info, &r);
 		calculate_texture_stripe(info, &r);
 		draw_buffer(info, r, stripe);
+		info->sp_buf[stripe] = r.dist;
 		stripe++;
 	}
+	if (info->sp_count > 0)
+		draw_sprites(info);
 }
 
 void	draw_image(t_info *info)
@@ -852,7 +1010,7 @@ void	count_map_rows(t_info *info)
 		if (ret == -1)
 			free_line(info, fd, line, "memory error");
 	}
-	while (!(is_not_map(line)))//(ret = get_next_line(fd, &line) != 0))
+	while (!(is_not_map(line)))
 	{
 		info->row_count++;
 		len = ft_strlen(line);
@@ -876,26 +1034,43 @@ void	init_pointers(t_info *info)
 	info->we_path = NULL;
 	info->ea_path = NULL;
 	info->s_path = NULL;
+	info->sp_buf = NULL;
+	info->sp_dist = NULL;
+	info->sp_ordr = NULL;
+	info->sprt = NULL;
+}
+
+void	init_sprite_info(t_info *info)
+{
+	if (!(info->sp_buf = (double*)malloc(sizeof(double) * info->wid)))
+		free_exit(info, "Memory allocation error");
+	if (!(info->sp_dist = (double*)malloc(sizeof(double) * info->sp_count)))
+		free_exit(info, "Memory allocation error");
+	if (!(info->sp_ordr = (int*)malloc(sizeof(int) * info->sp_count)))
+		free_exit(info, "Memory allocation error");
+	if (!(info->sprt = (t_d_vec*)malloc(sizeof(t_d_vec) * info->sp_count)))
+		free_exit(info, "Memory allocation error");
 }
 
 void	init_game(t_info *info)
-{	
+{
 	info->map_flag = -1;
 	info->buf_flag = -1;
 	info->texture_flag = -1;
 	init_pointers(info);
 	count_map_rows(info);
-	parse_cub_info(info);	
-	cub_info_check(info);	
+	parse_cub_info(info);
+	cub_info_check(info);
 	if (!(info->mlx = mlx_init()))
 		free_exit(info, "Connection to X-server Failed");	
 	compare_resolution(info);
 	init_buf(info);	
 	init_textures(info);	
 	load_textures(info);	
+	init_sprite_info(info);
 	init_keys(info);
-	info->mv_spd = .015;
-	info->rot_spd = .015;
+	info->mv_spd = .025;
+	info->rot_spd = .025;
 }
 
 void	create_bmfh(t_info *info, int fd)

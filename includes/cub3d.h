@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/09 18:25:52 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/11 12:02:20 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,23 @@ typedef	struct	s_tex
 	int	hght;
 }		t_tex;
 
-typedef struct	s_dble_vec
+typedef struct	s_d_vec
 {
 	double	x;
 	double	y;
-}		t_dble_vec;
+}		t_d_vec;
 
-typedef struct s_int_vec
+typedef struct s_i_vec
 {
 	int x;
 	int y;
-}		t_int_vec;
+}		t_i_vec;
+
+typedef struct	s_pair
+{
+	double	first;
+	int	second;
+}		t_pair;
 
 typedef struct s_keys
 {
@@ -93,16 +99,16 @@ typedef	struct	s_info
 	int		row_count;	
 	t_img		img;	
 	char		start;
-	t_dble_vec	pos;
-	t_dble_vec	dir;
-	t_dble_vec	cam;
+	t_d_vec		pos;
+	t_d_vec		dir;
+	t_d_vec		cam;
 	double		mv_spd;
 	double		rot_spd;
 	double		old_dir;
 	double		old_cam;
 	int		tex_num;
 	double		wall_x;
-	t_int_vec	tex;
+	t_i_vec		tex;
 	double		step_y;
 	double		tex_pos;
 	int		**buf;
@@ -110,16 +116,21 @@ typedef	struct	s_info
 	int		**texture;
 	int		texture_flag;
 	t_keys		key;
+	double		*sp_buf;
+	int		sp_count;
+	double		*sp_dist;
+	int		*sp_ordr;
+	t_d_vec		*sprt;
 }		t_info;
 
 typedef struct	s_ray
 {
 	double		cam_x;
-	t_dble_vec	dir;
-	t_int_vec	map;
-	t_dble_vec	side_dist;
-	t_dble_vec	delta_dist;
-	t_dble_vec	step;
+	t_d_vec		dir;
+	t_i_vec		map;
+	t_d_vec		side_dist;
+	t_d_vec		delta_dist;
+	t_d_vec		step;
 	double		dist;
 	int		hit;
 	int		side;
@@ -127,14 +138,31 @@ typedef struct	s_ray
 	int		draw_start;
 	int		draw_end;
 	int		color;
-	t_dble_vec	floor_wall;
+	t_d_vec		floor_wall;
 	double		dist_wall;
 	double		dist_player;
 	double		current_dist;
 	double		weight;
-	t_dble_vec	current_floor;
-	t_int_vec	floor_tex;
+	t_d_vec		current_floor;
+	t_i_vec		floor_tex;
 	int		pat;
 	int		f_tex;
 }			t_ray;
+
+typedef struct s_sprite
+{
+	t_d_vec 	loc;
+	double		inv_det;
+	t_d_vec		mod;
+	int		screen;
+	int		mv_screen;
+	int		hght;
+	t_i_vec		draw_start;
+	t_i_vec		draw_end;
+	int		wid;
+	t_i_vec		tex;
+	int		col; 
+	int		d;
+	int		color;
+}		t_sprite;
 #endif
