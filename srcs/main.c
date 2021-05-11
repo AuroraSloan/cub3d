@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/11 12:21:50 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/11 15:26:43 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -579,6 +579,7 @@ void	init_ray_information(t_info *info, t_ray *r, int stripe)
 	r->delta_dist.x = fabs(1 / r->dir.x);
 	r->delta_dist.y = fabs(1 / r->dir.y);
 	r->hit = 0;
+	//printf("dr: %f, dy: %f\n", r->dir.x, r->dir.y);
 }
 
 void	digital_differential_analyzer(t_info *info, t_ray *r)
@@ -645,6 +646,7 @@ void	calculate_wall_height(t_info *info, t_ray *r)
 	r->draw_end = r->wall_hight / 2 + info->hght / 2;
 	if (r->draw_end >= info->hght)
 		r->draw_end = info->hght - 1;	
+	//printf("de: %d, ds: %d, wh: %d, rd: %f,", r->draw_end, r->draw_start, r->wall_hight, r->dist);
 }
 
 void	select_which_texture(t_info *info, t_ray *r)
@@ -1069,8 +1071,8 @@ void	init_game(t_info *info)
 	load_textures(info);	
 	init_sprite_info(info);
 	init_keys(info);
-	info->mv_spd = .025;
-	info->rot_spd = .025;
+	info->mv_spd = .03;
+	info->rot_spd = .03;
 }
 
 void	create_bmfh(t_info *info, int fd)

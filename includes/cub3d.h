@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/11 12:02:20 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/11 13:12:31 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ typedef struct	s_ray
 	t_i_vec		map;
 	t_d_vec		side_dist;
 	t_d_vec		delta_dist;
-	t_d_vec		step;
+	t_i_vec		step;
 	double		dist;
 	int		hit;
 	int		side;
@@ -138,15 +138,15 @@ typedef struct	s_ray
 	int		draw_start;
 	int		draw_end;
 	int		color;
-	t_d_vec		floor_wall;
-	double		dist_wall;
-	double		dist_player;
-	double		current_dist;
-	double		weight;
-	t_d_vec		current_floor;
-	t_i_vec		floor_tex;
-	int		pat;
-	int		f_tex;
+//	t_d_vec		floor_wall;
+//	double		dist_wall;
+//	double		dist_player;
+//	double		current_dist;
+//	double		weight;
+//	t_d_vec		current_floor;
+//	t_i_vec		floor_tex;
+//	int		pat;
+//	int		f_tex;
 }			t_ray;
 
 typedef struct s_sprite
