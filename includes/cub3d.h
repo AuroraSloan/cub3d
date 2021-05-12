@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/11 13:12:31 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/11 19:14:07 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,6 @@ typedef	struct	s_info
 	t_d_vec		cam;
 	double		mv_spd;
 	double		rot_spd;
-	double		old_dir;
-	double		old_cam;
 	int		tex_num;
 	double		wall_x;
 	t_i_vec		tex;
