@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/11 19:14:07 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/13 16:50:51 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,70 +25,70 @@
 # define TEX_HGHT 64
 # define TEX_WID 64
 
-typedef	struct	s_img
+typedef struct s_img
 {
 	void	*img;
-	int	*addr;
-	int	bpp;
-	int	len;
-	int	end;
-}		t_img;
+	int		*addr;
+	int		bpp;
+	int		len;
+	int		end;
+}				t_img;
 
-typedef	struct	s_tex
+typedef struct s_tex
 {
 	void	*img;
-	int	*addr;
-	int	bpp;
-	int	len;
-	int	end;
-	int	wid;
-	int	hght;
-}		t_tex;
+	int		*addr;
+	int		bpp;
+	int		len;
+	int		end;
+	int		wid;
+	int		hght;
+}				t_tex;
 
-typedef struct	s_d_vec
+typedef struct s_d_vec
 {
 	double	x;
 	double	y;
-}		t_d_vec;
+}				t_d_vec;
 
 typedef struct s_i_vec
 {
-	int x;
-	int y;
-}		t_i_vec;
+	int	x;
+	int	y;
+}				t_i_vec;
 
-typedef struct	s_pair
+typedef struct s_pair
 {
 	double	first;
-	int	second;
-}		t_pair;
+	int		second;
+}				t_pair;
 
 typedef struct s_keys
 {
-	int up;
-	int down;
-	int left;
-	int right;
-	int w;
-	int a;
-	int s;
-	int d;
-}		t_keys;
+	int	up;
+	int	down;
+	int	left;
+	int	right;
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+}				t_keys;
 
-typedef	struct	s_info
+typedef struct s_info
 {
-	void		*mlx;
-	void		*win;
-	char		*name;
+	void	*mlx;
+	void	*win;
+	char	*name;
 	int		wid;
 	int		hght;
-	char		*no_path;
-	char		*so_path;
-	char		*we_path;
-	char		*ea_path;
-	char		*s_path;
-//	char		*f_path;
-//	char		*c_path;
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	char	*s_path;
+//	char	*f_path;
+//	char	*c_path;
 	int		f_color;
 	int		c_color;
 	int		**map;
@@ -97,70 +97,71 @@ typedef	struct	s_info
 	int		col_count;
 	int		row;
 	int		row_count;	
-	t_img		img;	
-	char		start;
-	t_d_vec		pos;
-	t_d_vec		dir;
-	t_d_vec		cam;
-	double		mv_spd;
-	double		rot_spd;
+	t_img	img;	
+	char	start;
+	t_d_vec	pos;
+	t_d_vec	dir;
+	t_d_vec	cam;
+	double	mv_spd;
+	double	rot_spd;
 	int		tex_num;
-	double		wall_x;
-	t_i_vec		tex;
-	double		step_y;
-	double		tex_pos;
+	double	wall_x;
+	t_i_vec	tex;
+	double	step_y;
+	double	tex_pos;
 	int		**buf;
 	int		buf_flag;
 	int		**texture;
 	int		texture_flag;
-	t_keys		key;
-	double		*sp_buf;
+	t_keys	key;
+	double	*sp_buf;
 	int		sp_count;
-	double		*sp_dist;
+	double	*sp_dist;
 	int		*sp_ordr;
-	t_d_vec		*sprt;
-}		t_info;
+	t_d_vec	*sprt;
+}					t_info;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
-	double		cam_x;
-	t_d_vec		dir;
-	t_i_vec		map;
-	t_d_vec		side_dist;
-	t_d_vec		delta_dist;
-	t_i_vec		step;
-	double		dist;
+	double	cam_x;
+	t_d_vec	dir;
+	t_i_vec	map;
+	t_d_vec	side_dist;
+	t_d_vec	delta_dist;
+	t_i_vec	step;
+	double	dist;
 	int		hit;
 	int		side;
 	int		wall_hight;
 	int		draw_start;
 	int		draw_end;
 	int		color;
-//	t_d_vec		floor_wall;
-//	double		dist_wall;
-//	double		dist_player;
-//	double		current_dist;
-//	double		weight;
-//	t_d_vec		current_floor;
-//	t_i_vec		floor_tex;
+//	t_d_vec	floor_wall;
+//	double	dist_wall;
+//	double	dist_player;
+//	double	current_dist;
+//	double	weight;
+//	t_d_vec	current_floor;
+//	t_i_vec	floor_tex;
 //	int		pat;
 //	int		f_tex;
-}			t_ray;
+}				t_ray;
 
 typedef struct s_sprite
 {
-	t_d_vec 	loc;
-	double		inv_det;
-	t_d_vec		mod;
+	t_d_vec	loc;
+	double	inv_det;
+	t_d_vec	mod;
 	int		screen;
 	int		mv_screen;
 	int		hght;
-	t_i_vec		draw_start;
-	t_i_vec		draw_end;
+	t_i_vec	draw_start;
+	t_i_vec	draw_end;
 	int		wid;
-	t_i_vec		tex;
-	int		col; 
+	t_i_vec	tex;
+	int		col;
 	int		d;
 	int		color;
-}		t_sprite;
+}				t_sprite;
+
 #endif

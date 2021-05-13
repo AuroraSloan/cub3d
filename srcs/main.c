@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 16:17:44 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/13 16:42:44 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -974,10 +974,10 @@ void	draw_sprites(t_info *info)
 void	configure_image(t_info *info)
 {
 	t_ray	r;
-	int	stripe;
+	int		stripe;
 
 	stripe = 0;
-	while(stripe < info->wid)
+	while (stripe < info->wid)
 	{
 		init_ray_information(info, &r, stripe);
 		set_ray_distance(info, &r);
@@ -994,8 +994,8 @@ void	configure_image(t_info *info)
 
 void	draw_image(t_info *info)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < info->hght)
@@ -1011,22 +1011,22 @@ void	draw_image(t_info *info)
 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
 }
 
-int		game_loop(t_info *info)
+int	game_loop(t_info *info)
 {
 	move_player(info);
 	configure_image(info);
 	draw_image(info);
-	return(0);
+	return (0);
 }
 
-void		load_image(t_info *info, int *texture, char *path, t_tex *tex)
+void	load_image(t_info *info, int *texture, char *path, t_tex *tex)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
-	if (!(tex->img =
-		mlx_xpm_file_to_image(info->mlx, path, &tex->wid, &tex->hght)))
+	tex->img = mlx_xpm_file_to_image(info->mlx, path, &tex->wid, &tex->hght);
+	if (!(tex_img))
 		free_exit(info, "recheck image paths");
 	tex->addr = (int *)
 		mlx_get_data_addr(tex->img, &tex->bpp, &tex->len, &tex->end);
@@ -1040,36 +1040,37 @@ void		load_image(t_info *info, int *texture, char *path, t_tex *tex)
 		}
 		i++;
 	}
-	mlx_destroy_image(info->mlx, tex->img);	
+	mlx_destroy_image(info->mlx, tex->img);
 }
 
-void		load_textures(t_info *info)
+void	load_textures(t_info *info)
 {
-	t_tex tex;
+	t_tex	tex;
 
 	load_image(info, info->texture[0], info->no_path, &tex);
 	load_image(info, info->texture[1], info->so_path, &tex);
 	load_image(info, info->texture[2], info->we_path, &tex);
 	load_image(info, info->texture[3], info->ea_path, &tex);
 	load_image(info, info->texture[4], info->s_path, &tex);
-//	load_image(info, info->texture[5], info->f_path, &tex);
-//	load_image(info, info->texture[6], into->c_path, &tex);
 }
 
 void	init_buf(t_info *info)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
-	if (!(info->buf = (int **)malloc(sizeof(int *) * info->hght)))
+	info->buf = (int **)malloc(sizeof(int *) * info->hght);
+	if (!(info->buf))
 		free_exit(info, "Memory allocation error");
 	info->buf_flag++;
 	while (i < info->hght)
 	{
-		if (!(info->buf[i++] = (int *)malloc(sizeof(int) * info->wid)))
+		info->buf[i] = (int *)malloc(sizeof(int) * info->wid);
+		if (!(info->buf[i]))
 			free_exit(info, "Memory allocation error");
 		info->buf_flag++;
+		i++;
 	}
 	i = 0;
 	while (i < info->hght)
@@ -1083,19 +1084,21 @@ void	init_buf(t_info *info)
 
 void	init_textures(t_info *info)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
-	if (!(info->texture = (int **)malloc(sizeof(int *) * 5)))
+	info->texture = (int **)malloc(sizeof(int *) * 5);
+	if (!(info->texture))
 		free_exit(info, "Memory allocation error");
 	info->texture_flag++;
 	while (i < 5)
 	{
-		if (!(info->texture[i++] = (int *)malloc(sizeof(int) *
-			(TEX_HGHT * TEX_WID))))
+		info->texture[i] = (int *)malloc(sizeof(int) * (TEX_HGHT * TEX_WID));
+		if (!(info->texture[i]))
 			free_exit(info, "Memory allocaiton error");
 		info->texture_flag++;
+		i++;
 	}
 	i = 0;
 	while (i < 5)
@@ -1121,7 +1124,7 @@ void	init_keys(t_info *info)
 
 void	count_col(t_info *info, char *line)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(line);
 	if (len > info->col_count)
@@ -1135,7 +1138,8 @@ void	count_map_rows(t_info *info)
 	int		ret;
 
 	line = NULL;
-	if ((fd = open(info->name, O_RDONLY)) == -1)
+	fd = open(info->name, O_RDONLY);
+	if (fd == -1)
 		failed_exit("Could not open .cub file");
 	while (is_not_map(line, fd, info))
 	{
@@ -1149,8 +1153,8 @@ void	count_map_rows(t_info *info)
 		info->row_count++;
 		count_col(info, line);
 		safe_free(line);
-		if ((ret = get_next_line(fd, &line) == -1))
-			free_line(info, fd, line, "memory error");
+		ret = get_next_line(fd, &line);
+		check_ret(info, line, fd, ret);
 	}
 	safe_free(line);
 	close(fd);
@@ -1174,20 +1178,25 @@ void	init_pointers(t_info *info)
 
 void	init_sprite_info(t_info *info)
 {
-	if (!(info->sp_buf = (double*)malloc(sizeof(double) * info->wid)))
+	info->sp_buf = (double *)malloc(sizeof(double) * info->wid);
+	if (!(info->sp_buf))
 		free_exit(info, "Memory allocation error");
-	if (!(info->sp_dist = (double*)malloc(sizeof(double) * info->sp_count)))
+	info->sp_dist = (double *)malloc(sizeof(double) * info->sp_count);
+	if (!(info->sp_dist))
 		free_exit(info, "Memory allocation error");
-	if (!(info->sp_ordr = (int*)malloc(sizeof(int) * info->sp_count)))
+	info->sp_ordr = (int *)malloc(sizeof(int) * info->sp_count);
+	if (!(info->sp_ordr))
 		free_exit(info, "Memory allocation error");
-	if (!(info->sprt = (t_d_vec*)malloc(sizeof(t_d_vec) * info->sp_count)))
+	info->sprt = (t_d_vec *)malloc(sizeof(t_d_vec) * info->sp_count);
+	if (!(info->sprt))
 		free_exit(info, "Memory allocation error");
 }
 
 void	init_game(t_info *info)
 {
 	init_pointers(info);
-	if (!(info->mlx = mlx_init()))
+	info->mlx = mlx_init();
+	if (!(info->mlx))
 		free_exit(info, "Connection to X-server Failed");
 	info->mv_spd = .03;
 	info->rot_spd = .03;
@@ -1197,7 +1206,7 @@ void	init_game(t_info *info)
 	info->f_color = -1;
 	info->c_color = -1;
 	info->wid = 0;
-	info->hght = 0;	
+	info->hght = 0;
 	info->row_count = 0;
 	info->col_count = 0;
 	count_map_rows(info);
@@ -1241,9 +1250,9 @@ void	create_bmih(t_info *info, int fd)
 void	write_rpd(t_info *info, int fd)
 {
 	unsigned int	pixel;
-	int		x;
-	int		y;
-	
+	int				x;
+	int				y;
+
 	y = info->hght - 1;
 	while (y >= 0)
 	{
@@ -1260,10 +1269,10 @@ void	write_rpd(t_info *info, int fd)
 
 void	create_bmp(t_info *info, char *file_name)
 {
-	int fd;
+	int	fd;
 
-	if ((fd = open(file_name, O_WRONLY | O_CREAT ,
-		S_IRWXU | S_IRWXG | S_IRWXO)) == -1)
+	fd = open(file_name, O_WRONLY | O_CREAT, S_IRWXU | S_IRWXG | S_IRWXO);
+	if (fd == -1)
 		free_exit(info, "Could not create .bmp file");
 	create_bmfh(info, fd);
 	create_bmih(info, fd);
@@ -1283,7 +1292,7 @@ void	check_arg_count(int argc, char **argv)
 		failed_exit("Second argument should be --save");
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_info	info;
 
@@ -1292,21 +1301,20 @@ int		main(int argc, char **argv)
 	init_game(&info);
 	if (argc == 3 && (ft_memcmp("--save", argv[2], 6) == 0))
 		create_bmp(&info, "cub3D.bmp");
-	if (!(info.win =
-		mlx_new_window(info.mlx, info.wid, info.hght, "Cub3D")))
+	info.win = mlx_new_window(info.mlx, info.wid, info.hght, "Cub3D");
+	if (!(info.win))
 		free_exit(&info, "Could not create window");
-	if (!(info.img.img = mlx_new_image(info.mlx, info.wid, info.hght)))
+	info.img.img = mlx_new_image(info.mlx, info.wid, info.hght);
+	if (!(info.img.img))
 		free_exit(&info, "Could not create image");
 	info.img.addr = (int *)mlx_get_data_addr(info.img.img,
-		&info.img.bpp, &info.img.len, &info.img.end);
+			&info.img.bpp, &info.img.len, &info.img.end);
 	mlx_loop_hook(info.mlx, game_loop, &info);
 	mlx_hook(info.win, 2, 1L << 0, &key_press, &info);
 	mlx_hook(info.win, 3, 1L << 1, &key_release, &info);
 	mlx_hook(info.win, 33, 1L << 17, &successful_exit, &info);
 	mlx_loop(info.mlx);
-}
-
-	
+}	
 		//START CASTING FLOOR
 		/*if (r.sd == 0 && r.dir.x > 0)
 		{

@@ -62,7 +62,7 @@ static int	make_new_line(int fd, char **line, char **s_arr, int ret)
 {
 	char	*tmp;
 	size_t	len;
-	int	flag;
+	int		flag;
 
 	flag = 1;
 	len = s_arr[fd][0] == '\n' ? 0 : gnl_strchr_len(s_arr[fd], '\n');
@@ -96,7 +96,7 @@ int	get_next_line(int fd, char **line)
 	if (ret == 0 && !s_arr[fd])
 		if (!(s_arr[fd] = gnl_strdup("")))
 			return (-1);
-	ret = make_new_line(fd, line, s_arr, ret);	
+	ret = make_new_line(fd, line, s_arr, ret);
 	if (ret == 0)
 	{
 		free(s_arr[fd]);

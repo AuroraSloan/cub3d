@@ -14,7 +14,7 @@ size_t	gnl_strlen(char *s)
 
 size_t	gnl_strchr_len(char *s, int c)
 {
-	size_t i;
+	size_t	i;
 
 	if (s[0] == (char)c)
 		return (1);
@@ -31,12 +31,13 @@ size_t	gnl_strchr_len(char *s, int c)
 char	*gnl_strdup(char *s1)
 {
 	char	*dst;
-	int	i;
-	int j;
+	int		i;
+	int		j;
 
 	j = 0;
-	i = s1 == NULL ? 0 : gnl_strlen(s1);
-	if (!(dst = (char*)malloc(sizeof(*dst) * gnl_strlen(s1) + 1)))
+	i = gnl_strlen(s1);
+	dst = (char *)malloc(sizeof(*dst) * gnl_strlen(s1) + 1);
+	if (!(dst))
 		return (NULL);
 	while (j < i)
 	{
@@ -49,15 +50,16 @@ char	*gnl_strdup(char *s1)
 
 char	*gnl_strjoin(char *s1, char *s2)
 {
-	int	i;
-	int	j;
-	int	len;
+	int		i;
+	int		j;
+	int		len;
 	char	*join;
 
 	if (!s1 || !s2)
 		return (s1);
 	len = gnl_strlen(s1) + gnl_strlen(s2);
-	if (!(join = (char *)malloc(sizeof(*join) * len + 1)))
+	join = (char *)malloc(sizeof(*join) * len + 1);
+	if (!(join))
 		return (NULL);
 	i = 0;
 	while (s1[i])
@@ -78,13 +80,14 @@ char	*gnl_strjoin(char *s1, char *s2)
 char	*gnl_substr(char *s, unsigned int start, size_t len)
 {
 	unsigned int	i;
-	char		*sub_s;
+	char			*sub_s;
 
 	if (!s)
 		return (NULL);
 	if (start >= gnl_strlen(s))
 		return (gnl_strdup(""));
-	if (!(sub_s = (char*)malloc(sizeof(*sub_s) * len + 1)))
+	sub_s = (char *)malloc(sizeof(*sub_s) * len + 1);
+	if (!(sub_s))
 		return (NULL);
 	i = 0;
 	while (i < len)
