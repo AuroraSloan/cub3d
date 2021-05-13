@@ -1,4 +1,14 @@
-//Outputs the string 's' to the given file descriptor, followed by a new line.
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/13 18:35:42 by jthompso          #+#    #+#             */
+/*   Updated: 2021/05/13 18:35:45 by jthompso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 

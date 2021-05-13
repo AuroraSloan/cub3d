@@ -1,5 +1,14 @@
-//Deletes and frees the given element and every successor of that element.
-//The pointer to the list is set to NULL.
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/13 18:21:07 by jthompso          #+#    #+#             */
+/*   Updated: 2021/05/13 18:21:08 by jthompso         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 
