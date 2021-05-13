@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 15:41:35 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/13 16:13:00 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,21 +423,24 @@ void	init_paths(t_info *info, char *line, int fd)
 	{
 		if (info->no_path != NULL)
 			free_line(info, fd, line, "Mulptiple no_path info");
-		if (!(info->no_path = ft_strtrim(&line[2], " ")))
+		info->no_path = ft_strtrim(&line[2], " ");
+		if (!(info->no_path))
 			free_line(info, fd, line, "can't allocate");
 	}
 	else if (memcmp(line, "SO", 2) == 0)
 	{
 		if (info->so_path != NULL)
 			free_line(info, fd, line, "Mulptiple SO path info");
-		if (!(info->so_path = ft_strtrim(&line[2], " ")))
+		info->so_path = ft_strtrim(&line[2], " ");
+		if (!(info->so_path))
 			free_line(info, fd, line, "can't allocate");
 	}
 	else if (memcmp(line, "WE", 2) == 0)
 	{
 		if (info->we_path != NULL)
 			free_line(info, fd, line, "Mulptiple WE path info");
-		if (!(info->we_path = ft_strtrim(&line[2], " ")))
+		info->we_path = ft_strtrim(&line[2], " ");
+		if (!(info->we_path))
 			free_line(info, fd, line, "can't allocate");
 	}
 	init_ea_s_paths(info, line, fd);
@@ -445,8 +448,8 @@ void	init_paths(t_info *info, char *line, int fd)
 
 void	floodfill(t_info *info, int tmp_map[info->row_count][info->col_count], int x, int y)
 {
-	if (x == 0 || x >= info->row_count - 1 ||
-		y == 0 || y >= info->col_count - 1)
+	if (x == 0 || x >= info->row_count - 1
+		|| y == 0 || y >= info->col_count - 1)
 		free_exit(info, "map is not closed");
 	tmp_map[x][y] = '#';
 	if (tmp_map[x - 1][y] != 1 && tmp_map[x - 1][y] != '#')
@@ -461,9 +464,9 @@ void	floodfill(t_info *info, int tmp_map[info->row_count][info->col_count], int 
 
 void	check_closed_map(t_info *info, int x, int y)
 {
-	int tmp_map[info->row_count][info->col_count];
-	int i;
-	int j;
+	int	tmp_map[info->row_count][info->col_count];
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < info->row_count)
@@ -471,7 +474,7 @@ void	check_closed_map(t_info *info, int x, int y)
 		j = 0;
 		while (j < info->col_count)
 		{
-			tmp_map[i][j] = info->map[i][j];	
+			tmp_map[i][j] = info->map[i][j];
 			j++;
 		}	
 		i++;
@@ -496,13 +499,12 @@ void	cub_info_check(t_info *info, int fd, char *line)
 	if (info->f_color == -1)
 		free_line(info, fd, line, "Check F color info or map location");
 	if (info->c_color == -1)
-		free_line(info, fd, line, "Check C color info or map location");	
-	//add floor and ceiling paths if able to do that.
+		free_line(info, fd, line, "Check C color info or map location");
 }
 
-int		is_start(char start)
-{	
-	return(start == 'N' || start == 'S' || start == 'E' || start == 'W');
+int	is_start(char start)
+{
+	return (start == 'N' || start == 'S' || start == 'E' || start == 'W');
 }
 
 void	init_n_s_vectors(t_info *info)
@@ -555,14 +557,14 @@ void	set_start(t_info *info, char start, int fd, char *line)
 	info->map[info->row][info->col] = 0;
 }
 
-void	init_map_row(t_info *info, int fd, char * line)
+void	init_map_row(t_info *info, int fd, char *line)
 {
-	int len;
+	int	len;
 
 	info->col = 0;
 	len = ft_strlen(line);
-	if (!(info->map[info->row] = (int *)malloc(sizeof(int) *
-		info->col_count)))
+	info->map[info->row] = (int *)malloc(sizeof(int) * info->col_count);
+	if (!(info->map[info->row]))
 		free_line(info, fd, line, "Memory allocation error");
 	info->map_flag++;
 	while (info->col < len)
@@ -588,7 +590,8 @@ void	init_map(int ret, t_info *info, int fd, char *line)
 	info->start = '\0';
 	info->row = 0;
 	info->sp_count = 0;
-	if (!(info->map = (int **)malloc(sizeof(int *) * info->row_count)))
+	info->map = (int **)malloc(sizeof(int *) * info->row_count);
+	if (!(info->map))
 		free_line(info, fd, line, "Memory allocation error");
 	info->map_flag++;
 	while (ret != 0)
@@ -597,7 +600,8 @@ void	init_map(int ret, t_info *info, int fd, char *line)
 			free_line(info, fd, line, "Delete new lines after map");
 		init_map_row(info, fd, line);
 		safe_free(line);
-		if ((ret = get_next_line(fd, &line)) == -1)
+		ret = get_next_line(fd, &line);
+		if (ret == -1)
 			free_line(info, fd, line, "cannot read .cub file");
 		info->row++;
 	}
@@ -613,7 +617,7 @@ void	parse_line_info(t_info *info, int fd, char *line)
 	{
 		if (info->wid > 0 || info->hght > 0)
 			free_line(info, fd, line, "multiple res information");
-		init_resolution(info, line, fd);	
+		init_resolution(info, line, fd);
 	}
 	else if (line[0] == 'F')
 	{
@@ -646,7 +650,8 @@ void	parse_cub_info(t_info *info)
 	int		ret;
 
 	line = NULL;
-	if ((fd = open(info->name, O_RDONLY)) == -1)
+	fd = open(info->name, O_RDONLY);
+	if (fd == -1)
 		failed_exit("Could not open .cub file");
 	while (is_not_map(line, fd, info))
 	{
@@ -662,12 +667,12 @@ void	parse_cub_info(t_info *info)
 	check_closed_map(info, (int)info->pos.x, (int)info->pos.y);
 }
 
-void		my_pxl_put(t_img *img, int x, int y, int color)
+void	my_pxl_put(t_img *img, int x, int y, int color)
 {
-	int *dst;
+	int	*dst;
 
 	dst = img->addr + (y * img->len + x * (img->bpp / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
 void	init_ray_information(t_info *info, t_ray *r, int stripe)
@@ -702,11 +707,11 @@ void	calculate_ray_distance(t_info *info, t_ray *r)
 			r->hit = 1;
 	}
 	if (r->side == 0)
-		r->dist = (r->map.x - info->pos.x +
-			(1 - r->step.x) / 2) / r->dir.x;
+		r->dist = (r->map.x - info->pos.x
+				+ (1 - r->step.x) / 2) / r->dir.x;
 	else
-		r->dist = (r->map.y - info->pos.y +
-			(1 - r->step.y) / 2) / r->dir.y;
+		r->dist = (r->map.y - info->pos.y
+				+ (1 - r->step.y) / 2) / r->dir.y;
 }
 
 void	set_ray_distance(t_info *info, t_ray *r)
@@ -770,8 +775,8 @@ void	calculate_texture_stripe(t_info *info, t_ray *r)
 	if (r->side == 1 && r->dir.y < 0)
 		info->tex.x = TEX_WID - info->tex.x - 1;
 	info->step_y = 1.0 * TEX_HGHT / r->wall_hight;
-	info->tex_pos = (r->draw_start - info->hght / 2 + r->wall_hight / 2) *
-		info->step_y;
+	info->tex_pos = (r->draw_start - info->hght / 2 + r->wall_hight / 2)
+		* info->step_y;
 }
 
 void	draw_buffer(t_info *info, t_ray r, int stripe)
@@ -790,7 +795,7 @@ void	draw_buffer(t_info *info, t_ray r, int stripe)
 		info->tex.y = (int)info->tex_pos & (TEX_HGHT - 1);
 		info->tex_pos += info->step_y;
 		pixel = info->texture[info->tex_num]
-			[TEX_HGHT * info->tex.y + info->tex.x];
+		[TEX_HGHT * info->tex.y + info->tex.x];
 		info->buf[wall][stripe] = pixel;
 		wall++;
 	}
@@ -801,9 +806,9 @@ void	draw_buffer(t_info *info, t_ray r, int stripe)
 
 void	locate_sprites(t_info *info)
 {
-	int i;
-	int j;
-	int count;
+	int	i;
+	int	j;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -826,17 +831,16 @@ void	locate_sprites(t_info *info)
 
 void	calc_sprite_dist(t_info *info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < info->sp_count)
 	{
 		info->sp_ordr[i] = i;
-		info->sp_dist[i] =
-		((info->pos.x - info->sprt[i].x) *
-		(info->pos.x - info->sprt[i].x) +
-		(info->pos.y - info->sprt[i].y) *
-		(info->pos.y - info->sprt[i].y));
+		info->sp_dist[i] = ((info->pos.x - info->sprt[i].x)
+				* (info->pos.x - info->sprt[i].x)
+				+ (info->pos.y - info->sprt[i].y)
+				* (info->pos.y - info->sprt[i].y));
 		i++;
 	}
 }
@@ -844,8 +848,8 @@ void	calc_sprite_dist(t_info *info)
 void	arrange_sprites(t_info *info, t_pair *sp)
 {
 	t_pair	tmp;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (i < info->sp_count)
@@ -870,11 +874,12 @@ void	arrange_sprites(t_info *info, t_pair *sp)
 
 void	sort_sprites(t_info *info)
 {
-	t_pair *sp;
-	int i;
+	t_pair	*sp;
+	int		i;
 
 	i = 0;
-	if (!(sp = (t_pair*)malloc(sizeof(t_pair) * info->sp_count)))
+	sp = (t_pair *)malloc(sizeof(t_pair) * info->sp_count);
+	if (!(sp))
 		free_exit(info, "could not allocate memory");
 	while (i < info->sp_count)
 	{
@@ -895,12 +900,12 @@ void	sort_sprites(t_info *info)
 
 void	calc_sprite_info(t_info *info, t_sprite *s)
 {
-	s->inv_det = 1.0 / (info->cam.x * info->dir.y -
-		info->dir.x * info->cam.y);
-	s->mod.x = s->inv_det * (info->dir.y * s->loc.x -
-		info->dir.x * s->loc.y);
-	s->mod.y = s->inv_det * (-info->cam.y * s->loc.x +
-		info->cam.x * s->loc.y);
+	s->inv_det = 1.0 / (info->cam.x * info->dir.y
+			- info->dir.x * info->cam.y);
+	s->mod.x = s->inv_det * (info->dir.y * s->loc.x
+			- info->dir.x * s->loc.y);
+	s->mod.y = s->inv_det * (-info->cam.y * s->loc.x
+			+ info->cam.x * s->loc.y);
 	s->screen = (int)((info->wid / 2) * (1 + s->mod.x / s->mod.y));
 	s->mv_screen = (int)(0.0 / s->mod.y);
 	s->hght = (int)fabs((info->hght / s->mod.y) / 1);
@@ -923,19 +928,19 @@ void	configure_sprite(t_info *info, t_sprite s, int stripe)
 {
 	while (stripe < s.draw_end.x)
 	{
-		s.tex.x = (int)((256 * (stripe - (-s.wid / 2 + s.screen)) *
-			TEX_WID / s.wid) / 256);
-		if (s.mod.y > 0 && stripe > 0 && stripe < info->wid &&
-			s.mod.y < info->sp_buf[stripe])
+		s.tex.x = (int)((256 * (stripe - (-s.wid / 2 + s.screen))
+					* TEX_WID / s.wid) / 256);
+		if (s.mod.y > 0 && stripe > 0 && stripe < info->wid
+			&& s.mod.y < info->sp_buf[stripe])
 		{
 			s.col = s.draw_start.y;
 			while (s.col < s.draw_end.y)
 			{
-				s.d = (s.col - s.mv_screen) * 256 - info->hght *
-					128 + s.hght * 128;
+				s.d = (s.col - s.mv_screen) * 256 - info->hght
+					* 128 + s.hght * 128;
 				s.tex.y = ((s.d * TEX_HGHT) / s.hght) / 256;
 				s.color = info->texture[4]
-					[TEX_WID * s.tex.y + s.tex.x];
+				[TEX_WID * s.tex.y + s.tex.x];
 				if ((s.color & 0X00FFFFFF) != 0)
 					info->buf[s.col][stripe] = s.color;
 				s.col++;
@@ -948,8 +953,8 @@ void	configure_sprite(t_info *info, t_sprite s, int stripe)
 void	draw_sprites(t_info *info)
 {
 	t_sprite	s;
-	int		i;
-	int		stripe;
+	int			i;
+	int			stripe;
 
 	i = 0;
 	locate_sprites(info);
