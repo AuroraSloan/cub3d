@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 16:13:00 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/13 16:17:44 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -794,8 +794,8 @@ void	draw_buffer(t_info *info, t_ray r, int stripe)
 	{
 		info->tex.y = (int)info->tex_pos & (TEX_HGHT - 1);
 		info->tex_pos += info->step_y;
-		pixel = info->texture[info->tex_num]
-		[TEX_HGHT * info->tex.y + info->tex.x];
+		pixel = info->texture[info->tex_num][TEX_HGHT
+			* info->tex.y + info->tex.x];
 		info->buf[wall][stripe] = pixel;
 		wall++;
 	}
@@ -939,8 +939,8 @@ void	configure_sprite(t_info *info, t_sprite s, int stripe)
 				s.d = (s.col - s.mv_screen) * 256 - info->hght
 					* 128 + s.hght * 128;
 				s.tex.y = ((s.d * TEX_HGHT) / s.hght) / 256;
-				s.color = info->texture[4]
-				[TEX_WID * s.tex.y + s.tex.x];
+				s.color = info->texture[4][TEX_WID
+					* s.tex.y + s.tex.x];
 				if ((s.color & 0X00FFFFFF) != 0)
 					info->buf[s.col][stripe] = s.color;
 				s.col++;
