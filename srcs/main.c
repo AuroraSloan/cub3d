@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/12 21:57:52 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/13 15:41:35 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_paths(t_info *info)
 	if (info->no_path != NULL)
 		safe_free(info->no_path);
 	if (info->so_path != NULL)
-		safe_free(info->so_path);	
+		safe_free(info->so_path);
 	if (info->we_path != NULL)
 		safe_free(info->we_path);
 	if (info->ea_path != NULL)
@@ -45,7 +45,7 @@ void	free_paths(t_info *info)
 
 void	free_matrices(t_info *info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (info->map_flag >= 0)
@@ -70,7 +70,7 @@ void	free_matrices(t_info *info)
 	}
 }
 
-void		free_memory(t_info *info)
+void	free_memory(t_info *info)
 {
 	free_paths(info);
 	free_matrices(info);
@@ -94,7 +94,7 @@ void		free_memory(t_info *info)
 	}
 }
 
-int		successful_exit(t_info *info, int mssg_flag)
+int	successful_exit(t_info *info, int mssg_flag)
 {
 	free_memory(info);
 	if (mssg_flag == 0)
@@ -130,15 +130,15 @@ void	turn_left(t_info *info)
 	double	old_cam;
 
 	old_dir = info->dir.x;
-	info->dir.x = info->dir.x * cos(info->rot_spd) -
-		info->dir.y * sin(info->rot_spd);
-	info->dir.y = old_dir * sin(info->rot_spd) +
-		info->dir.y * cos(info->rot_spd);
+	info->dir.x = info->dir.x * cos(info->rot_spd)
+		- info->dir.y * sin(info->rot_spd);
+	info->dir.y = old_dir * sin(info->rot_spd)
+		+ info->dir.y * cos(info->rot_spd);
 	old_cam = info->cam.x;
-	info->cam.x = info->cam.x * cos(info->rot_spd) -
-		info->cam.y * sin(info->rot_spd);
-	info->cam.y = old_cam * sin(info->rot_spd) +
-		info->cam.y * cos(info->rot_spd);
+	info->cam.x = info->cam.x * cos(info->rot_spd)
+		- info->cam.y * sin(info->rot_spd);
+	info->cam.y = old_cam * sin(info->rot_spd)
+		+ info->cam.y * cos(info->rot_spd);
 }
 
 void	turn_right(t_info *info)
@@ -147,35 +147,35 @@ void	turn_right(t_info *info)
 	double	old_cam;
 
 	old_dir = info->dir.x;
-	info->dir.x = info->dir.x * cos(-info->rot_spd) -
-		info->dir.y * sin(-info->rot_spd);
-	info->dir.y = old_dir * sin(-info->rot_spd) +
-		info->dir.y * cos(-info->rot_spd);
+	info->dir.x = info->dir.x * cos(-info->rot_spd)
+		- info->dir.y * sin(-info->rot_spd);
+	info->dir.y = old_dir * sin(-info->rot_spd)
+		+ info->dir.y * cos(-info->rot_spd);
 	old_cam = info->cam.x;
-	info->cam.x = info->cam.x * cos(-info->rot_spd) -
-		info->cam.y * sin(-info->rot_spd);
-	info->cam.y = old_cam * sin(-info->rot_spd) +
-		info->cam.y * cos(-info->rot_spd);
+	info->cam.x = info->cam.x * cos(-info->rot_spd)
+		- info->cam.y * sin(-info->rot_spd);
+	info->cam.y = old_cam * sin(-info->rot_spd)
+		+ info->cam.y * cos(-info->rot_spd);
 }
 
 void	move_left_right(t_info *info)
 {
 	if (info->key.a)
 	{
-		if (!info->map[(int)(info->pos.x -
-			info->cam.x * info->mv_spd)][(int)(info->pos.y)])
+		if (!info->map[(int)(info->pos.x
+				- info->cam.x * info->mv_spd)][(int)(info->pos.y)])
 			info->pos.x -= info->cam.x * info->mv_spd;
-		if (!info->map[(int)(info->pos.x)][(int)(info->pos.y -
-			info->cam.y * info->mv_spd)])
+		if (!info->map[(int)(info->pos.x)][(int)(info->pos.y
+				- info->cam.y * info->mv_spd)])
 			info->pos.y -= info->cam.y * info->mv_spd;
 	}
 	if (info->key.d)
 	{
-		if (!info->map[(int)(info->pos.x +
-			info->cam.x * info->mv_spd)][(int)(info->pos.y)])
+		if (!info->map[(int)(info->pos.x
+				+ info->cam.x * info->mv_spd)][(int)(info->pos.y)])
 			info->pos.x += info->cam.x * info->mv_spd;
-		if (!info->map[(int)(info->pos.x)][(int)(info->pos.y +
-			info->cam.y * info->mv_spd)])
+		if (!info->map[(int)(info->pos.x)][(int)(info->pos.y
+				+ info->cam.y * info->mv_spd)])
 			info->pos.y += info->cam.y * info->mv_spd;
 	}
 }
@@ -184,20 +184,20 @@ void	move_forwrd_backwrd(t_info *info)
 {
 	if (info->key.w)
 	{
-		if (!info->map[(int)(info->pos.x +
-			info->dir.x * info->mv_spd)][(int)(info->pos.y)])
+		if (!info->map[(int)(info->pos.x
+				+ info->dir.x * info->mv_spd)][(int)(info->pos.y)])
 			info->pos.x += info->dir.x * info->mv_spd;
-		if (!info->map[(int)(info->pos.x)][(int)(info->pos.y +
-			info->dir.y * info->mv_spd)])
+		if (!info->map[(int)(info->pos.x)][(int)(info->pos.y
+				+ info->dir.y * info->mv_spd)])
 			info->pos.y += info->dir.y * info->mv_spd;
 	}
 	if (info->key.s)
 	{
-		if (!info->map[(int)(info->pos.x -
-			info->dir.x * info->mv_spd)][(int)(info->pos.y)])
+		if (!info->map[(int)(info->pos.x
+				- info->dir.x * info->mv_spd)][(int)(info->pos.y)])
 			info->pos.x -= info->dir.x * info->mv_spd;
-		if (!info->map[(int)(info->pos.x)][(int)(info->pos.y -
-			info->dir.y * info->mv_spd)])
+		if (!info->map[(int)(info->pos.x)][(int)(info->pos.y
+				- info->dir.y * info->mv_spd)])
 			info->pos.y -= info->dir.y * info->mv_spd;
 	}
 }
@@ -212,14 +212,10 @@ void	move_player(t_info *info)
 	move_forwrd_backwrd(info);
 }
 
-int		key_press(int keycode, t_info *info)
+int	key_press(int keycode, t_info *info)
 {
 	if (keycode == ESC)
 		successful_exit(info, 0);
-	//else if (keycode == UP)
-	//	info->key.up = 1;
-	//else if (keycode == DWN)
-	//	info->key.down = 1;
 	else if (keycode == LFT)
 		info->key.left = 1;
 	else if (keycode == RT)
@@ -234,14 +230,11 @@ int		key_press(int keycode, t_info *info)
 		info->key.d = 1;
 	return (0);
 }
-int		key_release(int keycode, t_info *info)
+
+int	key_release(int keycode, t_info *info)
 {
 	if (keycode == ESC)
 		successful_exit(info, 0);
-//	else if (keycode == UP)
-//		info->key.up = 0;
-//	else if (keycode == DWN)
-//		info->key.down = 0;
 	else if (keycode == LFT)
 		info->key.left = 0;
 	else if (keycode == RT)
@@ -281,7 +274,7 @@ void	compare_resolution(t_info *info)
 
 int	is_valid_game_info(char *line)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	if (ft_memcmp(&line[0], "R ", 2) == 0)
@@ -305,8 +298,8 @@ int	is_valid_game_info(char *line)
 
 int	is_not_map(char *line, int fd, t_info *info)
 {
-	int ret;
-	
+	int	ret;
+
 	if (line == NULL || line[0] == '\0')
 		return (1);
 	ret = is_valid_game_info(line);
@@ -321,7 +314,7 @@ void	init_resolution(t_info *info, char *line, int fd)
 {	
 	int	i;
 	int	tmp;
-	
+
 	i = 0;
 	tmp = 0;
 	while (!(ft_isdigit(line[i])) && line[i] && line[i] != '-')
@@ -340,14 +333,14 @@ void	init_resolution(t_info *info, char *line, int fd)
 		free_line(info, fd, line, "Res must be two integers > 0");
 }
 
-int		create_rgb(int r, int g, int b)
+int	create_rgb(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
 }
 
-int		find_next_color(t_info *info, int fd, char *line, int i)
+int	find_next_color(t_info *info, int fd, char *line, int i)
 {
-	while ((ft_isdigit(line[i]) && line[i]) || line[i] == '-') 
+	while ((ft_isdigit(line[i]) && line[i]) || line[i] == '-')
 		i++;
 	while (!(ft_isdigit(line[i])) && line[i] && line[i] != '-')
 		i++;
@@ -356,9 +349,9 @@ int		find_next_color(t_info *info, int fd, char *line, int i)
 	return (i);
 }
 
-int		find_first_color(t_info *info, int fd, char * line)
+int	find_first_color(t_info *info, int fd, char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (!(ft_isdigit(line[i])) && line[i] && line[i] != '-')
@@ -368,7 +361,7 @@ int		find_first_color(t_info *info, int fd, char * line)
 	return (i);
 }
 
-int		init_c_f_color(t_info *info, char *line, int fd)
+int	init_c_f_color(t_info *info, char *line, int fd)
 {
 	int		i;
 	int		rd;
@@ -410,14 +403,16 @@ void	init_ea_s_paths(t_info *info, char *line, int fd)
 	{
 		if (info->ea_path != NULL)
 			free_line(info, fd, line, "Mulptiple EA path info");
-		if (!(info->ea_path = ft_strtrim(&line[2], " ")))
+		info->ea_path = ft_strtrim(&line[2], " ");
+		if (!(info->ea_path))
 			free_line(info, fd, line, "can't allocate");
 	}
 	else if (memcmp(line, "S ", 2) == 0)
 	{
 		if (info->s_path != NULL)
 			free_line(info, fd, line, "Mulptiple S path info");
-		if (!(info->s_path = ft_strtrim(&line[1], " ")))
+		info->s_path = ft_strtrim(&line[1], " ");
+		if (!(info->s_path))
 			free_line(info, fd, line, "can't allocate");
 	}
 }
