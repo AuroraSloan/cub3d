@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*  main.c                                               :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 12:01:22 by jthompso         ###   ########.fr       */
+/*  Updated: 2021/05/13 19:16:25 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	free_memory(t_info *info)
 	if (info->mlx != NULL)
 	{
 		mlx_destroy_display(info->mlx);
-		mlx_loop_end(info->mlx);
+		//mlx_loop_end(info->mlx);
 		safe_free(info->mlx);
 	}
 }
