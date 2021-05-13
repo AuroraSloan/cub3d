@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 16:42:44 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/13 12:01:22 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -643,6 +643,12 @@ void	check_ret(t_info *info, char *line, int fd, int ret)
 		free_line(info, fd, line, "memory error");
 }
 
+void	check_fd(t_info *info, int fd)
+{
+	if (fd == -1)
+		free_exit(info, "Could not open .cub file");
+}
+
 void	parse_cub_info(t_info *info)
 {
 	char	*line;
@@ -651,8 +657,7 @@ void	parse_cub_info(t_info *info)
 
 	line = NULL;
 	fd = open(info->name, O_RDONLY);
-	if (fd == -1)
-		failed_exit("Could not open .cub file");
+	check_fd(info, fd);
 	while (is_not_map(line, fd, info))
 	{
 		if (line != NULL)
@@ -1026,7 +1031,7 @@ void	load_image(t_info *info, int *texture, char *path, t_tex *tex)
 
 	i = 0;
 	tex->img = mlx_xpm_file_to_image(info->mlx, path, &tex->wid, &tex->hght);
-	if (!(tex_img))
+	if (!(tex->img))
 		free_exit(info, "recheck image paths");
 	tex->addr = (int *)
 		mlx_get_data_addr(tex->img, &tex->bpp, &tex->len, &tex->end);
@@ -1139,8 +1144,7 @@ void	count_map_rows(t_info *info)
 
 	line = NULL;
 	fd = open(info->name, O_RDONLY);
-	if (fd == -1)
-		failed_exit("Could not open .cub file");
+	check_fd(info, fd);
 	while (is_not_map(line, fd, info))
 	{
 		if (line != NULL)
@@ -1153,8 +1157,9 @@ void	count_map_rows(t_info *info)
 		info->row_count++;
 		count_col(info, line);
 		safe_free(line);
-		ret = get_next_line(fd, &line);
-		check_ret(info, line, fd, ret);
+		ret = get_next_line(fd, &line);	
+		if (ret == -1)
+			free_line(info, fd, line, "memory error");
 	}
 	safe_free(line);
 	close(fd);
@@ -1272,8 +1277,7 @@ void	create_bmp(t_info *info, char *file_name)
 	int	fd;
 
 	fd = open(file_name, O_WRONLY | O_CREAT, S_IRWXU | S_IRWXG | S_IRWXO);
-	if (fd == -1)
-		free_exit(info, "Could not create .bmp file");
+	check_fd(info, fd);
 	create_bmfh(info, fd);
 	create_bmih(info, fd);
 	configure_image(info);

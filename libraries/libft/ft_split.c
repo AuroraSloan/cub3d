@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 18:37:48 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 18:37:50 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/13 11:50:01 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*ft_strldup(char const *s_ptr, int l)
 		return (NULL);
 	dst = (char *)malloc(sizeof(*dst) * l + 1);
 	if (!dst)
-		return (null);
+		return (NULL);
 	i = 0;
 	while (i < l)
 	{

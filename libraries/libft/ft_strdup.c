@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 18:38:10 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 18:38:12 by jthompso         ###   ########.fr       */
+/*   Updated: 2021/05/13 11:49:31 by jthompso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strdup(const char *s1)
 	char	*dst;
 	int		i;
 
-	dst = (chari *)malloc(sizeof(*dst) * ft_strlen(s1) + 1);
+	dst = (char *)malloc(sizeof(*dst) * ft_strlen(s1) + 1);
 	if (!(dst))
 		return (NULL);
 	i = 0;
