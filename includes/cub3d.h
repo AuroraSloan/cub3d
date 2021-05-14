@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*  cub3d.h                                              :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 16:50:51 by jthompso         ###   ########.fr       */
+/*  Updated: 2021/05/14 15:51:58 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ typedef struct s_info
 	char	*we_path;
 	char	*ea_path;
 	char	*s_path;
-//	char	*f_path;
-//	char	*c_path;
 	int		f_color;
 	int		c_color;
 	int		**map;
@@ -163,5 +161,43 @@ typedef struct s_sprite
 	int		d;
 	int		color;
 }				t_sprite;
+
+void	safe_free(void *ptr);
+void	free_memory(t_info *info);
+void	failed_exit(char *exit_status);
+void	free_exit(t_info *info, char *exit_status);
+void	free_line(t_info *info, int fd, char *line, char *exit_status);
+void	check_failed_ret(t_info *info, char *line, int fd, int ret);
+void	check_failed_fd(t_info *info, int fd);
+void	create_bmp(t_info *info, char *file_name);
+void	init_pointers_keys(t_info *info);
+void	init_sprite_info(t_info *info);
+void	init_buf(t_info *info);
+void	count_map_rows(t_info *info);
+void	init_textures(t_info *info);
+int		is_not_map(char *line, int fd, t_info *info);
+void	parse_cub_info(t_info *info);
+int		create_rgb(int r, int g, int b);
+int		find_next_color(t_info *info, int fd, char *line, int i);
+int		find_first_color(t_info *info, int fd, char *line);
+void	init_ea_s_paths(t_info *info, char *line, int fd);
+int		is_start(char start);
+void	init_n_s_vectors(t_info *info);
+void	init_w_e_vectors(t_info *info);
+void	init_map(int ret, t_info *info, int fd, char *line);
+int		is_valid_game_info(char *line);
+void	parse_line_info(t_info *info, int fd, char *line);
+void	check_closed_map(t_info *info, int x, int y);
+void	move_player(t_info *info);
+int		successful_exit(t_info *info, int mssg_flag);
+int		key_press(int keycode, t_info *info);
+int		key_release(int keycode, t_info *info);
+void	draw_image(t_info *info);
+void	configure_image(t_info *info);
+void	select_texture(t_info *info, t_ray *r);
+void	init_ray_information(t_info *info, t_ray *r, int stripe);
+void	calculate_ray_distance(t_info *info, t_ray *r);
+void	draw_sprites(t_info *info);
+void	sort_sprites(t_info *info);
 
 #endif
