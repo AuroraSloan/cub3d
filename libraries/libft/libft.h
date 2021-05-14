@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*  libft.h                                              :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 18:43:37 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 18:43:40 by jthompso         ###   ########.fr       */
+/*  Updated: 2021/05/14 20:14:35 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LIBFT_H
 
 # define BUFFER_SIZE 32
-# define OPEN_MAX 10
+# define MAX_FD 10
 # include <string.h>
 # include <stdlib.h>
 
@@ -73,10 +73,8 @@ char		*ft_itoa(int n);
 char		*ft_strnstr(const char *haystack, const char *needle,
 				size_t len);
 int			get_next_line(int fd, char **line);
-size_t		gnl_strlen(char *s);
-size_t		gnl_strchr_len(char *s, int c);
-char		*gnl_strjoin(char *s1, char *s2);
-char		*gnl_strdup(char *s1);
-char		*gnl_substr(char *s, unsigned int start, size_t len);
+size_t		find_char(const char *s, int c);
+int			err_free1(char *s1);
+int			err_free2(char *s1, char *s2);
 
 #endif

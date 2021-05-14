@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*  get_next_line.c                                      :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 18:43:18 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 18:43:20 by jthompso         ###   ########.fr       */
+/*  Updated: 2021/05/14 19:41:14 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,51 +16,44 @@
 #include <unistd.h>
 #include "libft.h"
 
-static int	err_free1(char *s1)
+static int	update_buffer(int fd, char *buf, char **s_arr, int ret)
 {
-	if (s1)
-	{
-		free(s1);
-		s1 = NULL;
-	}
-	return (-1);
-}
+	char	*tmp;
 
-static int	err_free2(char *s1, char *s2)
-{
-	if (s1)
-	{
-		free(s1);
-		s1 = NULL;
-	}
-	if (s2)
-	{
-		free(s2);
-		s2 = NULL;
-	}
-	return (-1);
+	if (!(s_arr[fd]))
+		s_arr[fd] = ft_strdup("");
+	if (!s_arr[fd])
+		return (err_free2(s_arr[fd], buf));
+	tmp = ft_strdup(s_arr[fd]);
+	if (!tmp)
+		return (err_free2(s_arr[fd], buf));
+	free(s_arr[fd]);
+	s_arr[fd] = ft_strjoin(tmp, buf);
+	if (!s_arr[fd])
+		return (err_free2(buf, tmp));
+	free(tmp);
+	return (ret);
 }
 
 static int	buffer_flow(int fd, char **s_arr)
 {
 	ssize_t	ret;
 	char	*buf;
-	char	*tmp;
 
-	if (!(buf = malloc((size_t)BUFFER_SIZE + 1)))
+	buf = malloc((size_t)BUFFER_SIZE + 1);
+	if (!buf)
 		return (err_free1(s_arr[fd]));
-	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
+	ret = 1;
+	while (ret > 0)
 	{
+		ret = read(fd, buf, BUFFER_SIZE);
 		if (ret == -1)
 			return (err_free2(s_arr[fd], buf));
 		buf[ret] = '\0';
-		if (!(tmp = gnl_strdup(s_arr[fd])))
-			return (err_free2(s_arr[fd], buf));
-		free(s_arr[fd]);
-		if (!(s_arr[fd] = gnl_strjoin(tmp, buf)))
-			return (err_free2(buf, tmp));
-		free(tmp);
-		if (gnl_strchr_len(s_arr[fd], '\n') > 0)
+		ret = update_buffer(fd, buf, s_arr, ret);
+		if (ret == -1)
+			return (ret);
+		if (ft_strchr(s_arr[fd], '\n'))
 		{
 			ret = 1;
 			break ;
@@ -77,18 +70,21 @@ static int	make_new_line(int fd, char **line, char **s_arr, int ret)
 	int		flag;
 
 	flag = 1;
-	len = s_arr[fd][0] == '\n' ? 0 : gnl_strchr_len(s_arr[fd], '\n');
-	if (!gnl_strchr_len(s_arr[fd], '\n'))
+	len = find_char(s_arr[fd], '\n') - 1;
+	if (!ft_strchr(s_arr[fd], '\n'))
 	{
-		len = gnl_strlen(s_arr[fd]);
+		len = ft_strlen(s_arr[fd]);
 		flag--;
 	}
-	if (!(*line = gnl_substr(s_arr[fd], 0, len)))
+	*line = ft_substr(s_arr[fd], 0, len);
+	if (!*line)
 		return (err_free1(s_arr[fd]));
-	if (!(tmp = gnl_strdup(s_arr[fd] + len + flag)))
+	tmp = ft_strdup(s_arr[fd] + len + flag);
+	if (!tmp)
 		return (err_free1(s_arr[fd]));
 	free(s_arr[fd]);
-	if (!(s_arr[fd] = gnl_strdup(tmp)))
+	s_arr[fd] = ft_strdup(tmp);
+	if (!s_arr[fd])
 		return (err_free1(tmp));
 	free(tmp);
 	return (ret);
@@ -96,18 +92,20 @@ static int	make_new_line(int fd, char **line, char **s_arr, int ret)
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*s_arr[OPEN_MAX];
-	int	ret;
+	static char	*s_arr[MAX_FD];
+	int			ret;
 
 	ret = 1;
-	if (!line || fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1)
+	if (!line || fd < 0 || fd > MAX_FD || BUFFER_SIZE < 1)
 		return (-1);
-	if (!s_arr[fd] || gnl_strchr_len(s_arr[fd], '\n') == 0)
-		if ((ret = buffer_flow(fd, s_arr)) == -1)
-			return (-1);
+	if (!s_arr[fd] || !ft_strchr(s_arr[fd], '\n'))
+		ret = buffer_flow(fd, s_arr);
 	if (ret == 0 && !s_arr[fd])
-		if (!(s_arr[fd] = gnl_strdup("")))
+	{
+		s_arr[fd] = ft_strdup("");
+		if (!s_arr[fd])
 			return (-1);
+	}
 	ret = make_new_line(fd, line, s_arr, ret);
 	if (ret == 0)
 	{

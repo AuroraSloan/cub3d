@@ -1,112 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*  get_next_line_utils.c                                :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 18:43:30 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 18:43:32 by jthompso         ###   ########.fr       */
+/*  Updated: 2021/05/14 19:50:01 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	gnl_strlen(char *s)
+size_t	find_char(const char *s, int c)
 {
 	size_t	i;
+	size_t	ret;
 
-	if (s == NULL)
-		return (0);
 	i = 0;
+	ret = 1;
 	while (s[i])
-		i++;
+	{
+		if (s[i++] == (char)c)
+			return (ret);
+		ret++;
+	}
 	return (i);
 }
 
-size_t	gnl_strchr_len(char *s, int c)
+int	err_free1(char *s1)
 {
-	size_t	i;
-
-	if (s[0] == (char)c)
-		return (1);
-	i = 0;
-	while (s[i])
+	if (s1)
 	{
-		if (s[i] == (char)c)
-			return (i);
-		i++;
+		free(s1);
+		s1 = NULL;
 	}
-	return (0);
+	return (-1);
 }
 
-char	*gnl_strdup(char *s1)
+int	err_free2(char *s1, char *s2)
 {
-	char	*dst;
-	int		i;
-	int		j;
-
-	j = 0;
-	i = gnl_strlen(s1);
-	dst = (char *)malloc(sizeof(*dst) * gnl_strlen(s1) + 1);
-	if (!(dst))
-		return (NULL);
-	while (j < i)
+	if (s1)
 	{
-		dst[j] = s1[j];
-		j++;
+		free(s1);
+		s1 = NULL;
 	}
-	dst[j] = '\0';
-	return (dst);
-}
-
-char	*gnl_strjoin(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*join;
-
-	if (!s1 || !s2)
-		return (s1);
-	len = gnl_strlen(s1) + gnl_strlen(s2);
-	join = (char *)malloc(sizeof(*join) * len + 1);
-	if (!(join))
-		return (NULL);
-	i = 0;
-	while (s1[i])
+	if (s2)
 	{
-		join[i] = s1[i];
-		i++;
+		free(s2);
+		s2 = NULL;
 	}
-	j = 0;
-	while (s2[j])
-	{
-		join[i + j] = s2[j];
-		j++;
-	}
-	join[i + j] = '\0';
-	return (join);
-}
-
-char	*gnl_substr(char *s, unsigned int start, size_t len)
-{
-	unsigned int	i;
-	char			*sub_s;
-
-	if (!s)
-		return (NULL);
-	if (start >= gnl_strlen(s))
-		return (gnl_strdup(""));
-	sub_s = (char *)malloc(sizeof(*sub_s) * len + 1);
-	if (!(sub_s))
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		sub_s[i] = s[start + i];
-		i++;
-	}
-	sub_s[i] = '\0';
-	return (sub_s);
+	return (-1);
 }
