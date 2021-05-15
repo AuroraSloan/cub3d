@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/16 00:21:06 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/15 21:19:58 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	main(int argc, char **argv)
 	info.img.addr = (int *)mlx_get_data_addr(info.img.img,
 			&info.img.bpp, &info.img.len, &info.img.end);
 	mlx_loop_hook(info.mlx, game_loop, &info);
-	mlx_hook(info.win, 2, 1L << 0, &key_press, &info);
-	mlx_hook(info.win, 3, 1L << 1, &key_release, &info);
-	mlx_hook(info.win, 17, 1L << 17, &successful_exit, &info);
+	mlx_hook(info.win, 2, 1L << 0, key_press, &info);
+	mlx_hook(info.win, 3, 1L << 1, key_release, &info);
+	mlx_hook(info.win, 33, 1L << 17, successful_exit, &info);
 	mlx_loop(info.mlx);
 }	
