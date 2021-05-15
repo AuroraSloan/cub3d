@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 20:35:58 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/14 14:38:42 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/15 14:38:20 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
@@ -79,6 +79,7 @@ void	free_memory(t_info *info)
 	if (info->mlx != NULL)
 	{
 		mlx_destroy_display(info->mlx);
+		mlx_loop_end(info->mlx);
 		safe_free(info->mlx);
 	}
 }

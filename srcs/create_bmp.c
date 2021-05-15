@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 21:00:55 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/13 21:05:59 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/15 15:17:32 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
@@ -68,6 +68,7 @@ void	create_bmp(t_info *info, char *file_name)
 {
 	int	fd;
 
+	info->bmp = 1;
 	fd = open(file_name, O_WRONLY | O_CREAT, S_IRWXU | S_IRWXG | S_IRWXO);
 	check_failed_fd(info, fd);
 	create_bmfh(info, fd);
@@ -75,5 +76,5 @@ void	create_bmp(t_info *info, char *file_name)
 	configure_image(info);
 	write_rpd(info, fd);
 	close(fd);
-	successful_exit(info, 1);
+	successful_exit(info);
 }

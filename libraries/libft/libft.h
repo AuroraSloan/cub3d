@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 18:43:37 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/14 20:14:35 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/15 14:19:09 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char		*ft_itoa(int n);
 char		*ft_strnstr(const char *haystack, const char *needle,
 				size_t len);
 int			get_next_line(int fd, char **line);
-size_t		find_char(const char *s, int c);
+size_t		ft_find_char(const char *s, int c);
 int			err_free1(char *s1);
 int			err_free2(char *s1, char *s2);
 

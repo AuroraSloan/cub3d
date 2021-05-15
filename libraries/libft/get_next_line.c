@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 18:43:18 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/14 19:41:14 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/15 14:18:46 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	make_new_line(int fd, char **line, char **s_arr, int ret)
 	int		flag;
 
 	flag = 1;
-	len = find_char(s_arr[fd], '\n') - 1;
+	len = ft_find_char(s_arr[fd], '\n') - 1;
 	if (!ft_strchr(s_arr[fd], '\n'))
 	{
 		len = ft_strlen(s_arr[fd]);

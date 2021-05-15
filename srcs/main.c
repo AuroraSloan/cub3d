@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/14 15:48:51 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/15 15:14:54 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/cub3d.h"
@@ -37,8 +37,8 @@ void	init_game(t_info *info)
 	info->mlx = mlx_init();
 	if (!(info->mlx))
 		free_exit(info, "Connection to X-server Failed");
-	info->mv_spd = .03;
-	info->rot_spd = .03;
+	info->mv_spd = .05;
+	info->rot_spd = .05;
 	info->map_flag = -1;
 	info->buf_flag = -1;
 	info->texture_flag = -1;
@@ -48,6 +48,7 @@ void	init_game(t_info *info)
 	info->hght = 0;
 	info->row_count = 0;
 	info->col_count = 0;
+	info->bmp = 0;
 	count_map_rows(info);
 	parse_cub_info(info);
 	init_buf(info);
@@ -83,8 +84,8 @@ int	main(int argc, char **argv)
 	info.img.addr = (int *)mlx_get_data_addr(info.img.img,
 			&info.img.bpp, &info.img.len, &info.img.end);
 	mlx_loop_hook(info.mlx, game_loop, &info);
-	mlx_hook(info.win, 2, 1L << 0, &key_press, &info);
-	mlx_hook(info.win, 3, 1L << 1, &key_release, &info);
-	mlx_hook(info.win, 33, 1L << 17, &successful_exit, &info);
+	mlx_hook(info.win, 2, 1L << 0, key_press, &info);
+	mlx_hook(info.win, 3, 1L << 1, key_release, &info);
+	mlx_hook(info.win, 33, 1L << 17, successful_exit, &info);
 	mlx_loop(info.mlx);
 }	

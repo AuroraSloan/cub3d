@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/14 15:51:58 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/15 15:16:52 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_info
 	double	*sp_dist;
 	int		*sp_ordr;
 	t_d_vec	*sprt;
+	int		bmp;
 }					t_info;
 
 typedef struct s_ray
@@ -189,7 +190,7 @@ int		is_valid_game_info(char *line);
 void	parse_line_info(t_info *info, int fd, char *line);
 void	check_closed_map(t_info *info, int x, int y);
 void	move_player(t_info *info);
-int		successful_exit(t_info *info, int mssg_flag);
+int		successful_exit(t_info *info);
 int		key_press(int keycode, t_info *info);
 int		key_release(int keycode, t_info *info);
 void	draw_image(t_info *info);

@@ -6,27 +6,11 @@
 /*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 18:43:30 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/14 19:50:01 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/15 14:16:35 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-size_t	find_char(const char *s, int c)
-{
-	size_t	i;
-	size_t	ret;
-
-	i = 0;
-	ret = 1;
-	while (s[i])
-	{
-		if (s[i++] == (char)c)
-			return (ret);
-		ret++;
-	}
-	return (i);
-}
 
 int	err_free1(char *s1)
 {
