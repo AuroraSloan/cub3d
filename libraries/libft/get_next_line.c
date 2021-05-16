@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 18:43:18 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/15 14:18:46 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/16 16:20:29 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static int	make_new_line(int fd, char **line, char **s_arr, int ret)
 	{
 		len = ft_strlen(s_arr[fd]);
 		flag--;
+		if (len != 0)
+			ret = 1;
 	}
 	*line = ft_substr(s_arr[fd], 0, len);
 	if (!*line)

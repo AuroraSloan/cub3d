@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/15 23:48:32 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/16 16:21:31 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define CUB3D_H
 
 # define ESC 65307
-# define UP 65362
-# define DWN 65364
 # define LFT 65361
 # define RT 65363
 # define W 119

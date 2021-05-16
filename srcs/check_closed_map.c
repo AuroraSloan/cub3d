@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 14:37:32 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/15 21:17:56 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/16 16:22:07 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	**init_tmp_map(t_info *info)
 	int	cnt;
 
 	cnt = 0;
-	tmp_map = (int **)malloc(sizeof(int *) * info->hght);
+	tmp_map = (int **)malloc(sizeof(int *) * info->row_count);
 	if (!(tmp_map))
 		free_exit(info, "Memory allocation error");
 	while (cnt < info->row_count)
