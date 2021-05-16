@@ -6,14 +6,14 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 14:37:32 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/16 16:22:07 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/16 16:30:29 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include <stdlib.h>
 
-static void	free_tmp_map(t_info *info, int **tmp_map, int cnt, int error)
+static void	free_tmp_map(t_info *info, int **tmp_map, int cnt, char *error)
 {
 	int	i;
 
@@ -22,14 +22,14 @@ static void	free_tmp_map(t_info *info, int **tmp_map, int cnt, int error)
 		safe_free(tmp_map[i++]);
 	safe_free(tmp_map);
 	if (error)
-		free_exit(info, "Memory allocation error");
+		free_exit(info, error);
 }
 
 static void	floodfill(t_info *info, int **tmp_map, int x, int y)
 {
 	if (x == 0 || x >= info->row_count - 1
 		|| y == 0 || y >= info->col_count - 1)
-		free_exit(info, "map is not closed");
+		free_tmp_map(info, tmp_map, info->row_count, "map not closed");
 	tmp_map[x][y] = '#';
 	if (tmp_map[x - 1][y] != 1 && tmp_map[x - 1][y] != '#')
 		floodfill(info, tmp_map, x - 1, y);
@@ -54,7 +54,7 @@ static int	**init_tmp_map(t_info *info)
 	{
 		tmp_map[cnt] = (int *)malloc(sizeof(int) * info->col_count);
 		if (!(tmp_map[cnt]))
-			free_tmp_map(info, tmp_map, cnt, 1);
+			free_tmp_map(info, tmp_map, cnt, "Can't allocate mem");
 		cnt++;
 	}
 	return (tmp_map);
@@ -79,5 +79,5 @@ void	check_closed_map(t_info *info, int x, int y)
 		i++;
 	}	
 	floodfill(info, tmp_map, x, y);
-	free_tmp_map(info, tmp_map, info->row_count, 0);
+	free_tmp_map(info, tmp_map, info->row_count, NULL);
 }
