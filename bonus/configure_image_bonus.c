@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                         :::      ::::::::  */
-/*  configure_image.c                                    :+:      :+:    :+:  */
+/*  configure_image_bonus.c                              :+:      :+:    :+:  */
 /*                                                     +:+ +:+         +:+    */
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 15:15:16 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 19:51:47 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/17 20:15:19 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 #include <math.h>
 
 static void	set_ray_distance(t_info *info, t_ray *r)

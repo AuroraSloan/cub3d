@@ -1,4 +1,4 @@
-R 999 599
+R 1300 1000
 WE ../tests/cub3d/koto/cub3d/images/koto_west.xpm
 NO ../tests/cub3d/koto/cub3d/images/koto_north.xpm
 EA ../tests/cub3d/koto/cub3d/images/koto_east.xpm

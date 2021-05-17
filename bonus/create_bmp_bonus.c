@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                         :::      ::::::::  */
-/*  create_bmp.c                                         :+:      :+:    :+:  */
+/*  create_bmp_bonus.c                                   :+:      :+:    :+:  */
 /*                                                     +:+ +:+         +:+    */
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 21:00:55 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:18:58 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/17 20:16:03 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>

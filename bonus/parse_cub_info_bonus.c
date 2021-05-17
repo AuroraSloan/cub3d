@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                         :::      ::::::::  */
-/*  parse_cub_info.c                                     :+:      :+:    :+:  */
+/*  parse_cub_info_bonus.c                               :+:      :+:    :+:  */
 /*                                                     +:+ +:+         +:+    */
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 21:45:42 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:19:06 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/17 20:19:11 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 #include "../libraries/libmlx_Linux/mlx.h"
 #include "../libraries/libft/libft.h"
 #include <sys/types.h>

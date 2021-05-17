@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*  main.c                                               :+:      :+:    :+:  */
+/*  main_bonus.c                                         :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/17 20:09:17 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/17 20:17:46 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 #include "../libraries/libft/libft.h"
 #include "../libraries/libmlx_Linux/mlx.h"
 #include <sys/types.h>

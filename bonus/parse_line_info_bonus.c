@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                         :::      ::::::::  */
-/*  parse_line_info.c                                    :+:      :+:    :+:  */
+/*  parse_line_info_bonus.c                              :+:      :+:    :+:  */
 /*                                                     +:+ +:+         +:+    */
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 21:55:06 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 15:38:00 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/17 20:19:20 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 #include "../libraries/libft/libft.h"
 
 static void	init_paths(t_info *info, char *line, int fd)

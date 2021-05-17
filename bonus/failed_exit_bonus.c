@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                         :::      ::::::::  */
-/*  failed_exit.c                                        :+:      :+:    :+:  */
+/*  failed_exit_bonus.c                                  :+:      :+:    :+:  */
 /*                                                     +:+ +:+         +:+    */
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 20:52:32 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 17:36:03 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/17 20:16:37 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 #include "../libraries/libft/libft.h"
 #include <unistd.h>
 

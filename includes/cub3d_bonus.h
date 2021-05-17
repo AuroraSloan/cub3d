@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/16 16:46:28 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/17 00:44:55 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_info
 	int		col_count;
 	int		row;
 	int		row_count;	
+	int		save;
 	t_img	img;	
 	char	start;
 	t_d_vec	pos;
