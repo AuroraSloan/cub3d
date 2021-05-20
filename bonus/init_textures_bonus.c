@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 21:38:49 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:17:38 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/19 06:37:02 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static void	load_textures(t_info *info)
 	load_image(info, info->texture[2], info->we_path, &tex);
 	load_image(info, info->texture[3], info->ea_path, &tex);
 	load_image(info, info->texture[4], info->s_path, &tex);
+	load_image(info, info->texture[5], "images/mossy.xpm", &tex);
 }
 
 void	init_textures(t_info *info)
@@ -82,11 +83,11 @@ void	init_textures(t_info *info)
 	int	j;
 
 	i = 0;
-	info->texture = (int **)malloc(sizeof(int *) * 5);
+	info->texture = (int **)malloc(sizeof(int *) * 6);
 	if (!(info->texture))
 		free_exit(info, "Memory allocation error");
 	info->texture_flag++;
-	while (i < 5)
+	while (i < 6)
 	{
 		info->texture[i] = (int *)malloc(sizeof(int) * (TEX_HGHT * TEX_WID));
 		if (!(info->texture[i]))
@@ -95,7 +96,7 @@ void	init_textures(t_info *info)
 		i++;
 	}
 	i = 0;
-	while (i < 5)
+	while (i < 6)
 	{
 		j = 0;
 		while (j < TEX_HGHT * TEX_WID)

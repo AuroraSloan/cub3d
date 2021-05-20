@@ -14,7 +14,8 @@ B_SRC_FILES = main_bonus.c free_memory_bonus.c failed_exit_bonus.c \
 	parse_line_info_utils_bonus.c init_map_utils_bonus.c draw_image_bonus.c\
 	check_closed_map_bonus.c move_player_bonus.c hook_utils_bonus.c \
 	configure_image_bonus.c configure_image_utils_bonus.c \
-	draw_sprites_bonus.c sort_sprites_bonus.c
+	draw_sprites_bonus.c sort_sprites_bonus.c mouse_hook_utils_bonus.c \
+	draw_floor_bonus.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 B_SRCS = $(addprefix $(B_SRC_DIR), $(B_SRC_FILES))
 OBJS = $(SRCS:.c=.o)

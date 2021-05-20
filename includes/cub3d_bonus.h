@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/17 00:44:55 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/19 16:36:07 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,9 @@ typedef struct s_info
 	int		*sp_ordr;
 	t_d_vec	*sprt;
 	int		bmp;
+	t_i_vec	mouse;
+	t_i_vec	old_mouse;
+	int		exit;
 }					t_info;
 
 typedef struct s_ray
@@ -135,6 +138,16 @@ typedef struct s_ray
 	int		wall_hight;
 	int		draw_start;
 	int		draw_end;
+	t_d_vec		floor_wall;
+	double		dist_wall;
+	double		dist_player;
+	double		current_dist;
+	double		weight;
+	t_d_vec		current_floor;
+	t_i_vec		floor_tex;
+	int		pat;
+	int		f_tex;
+	
 }				t_ray;
 
 typedef struct s_sprite
@@ -191,5 +204,13 @@ void	init_ray_information(t_info *info, t_ray *r, int stripe);
 void	calculate_ray_distance(t_info *info, t_ray *r);
 void	draw_sprites(t_info *info);
 void	sort_sprites(t_info *info);
-
+int	mouse_movement(int x, int y, t_info *info);
+void	turn_left(t_info *info);
+void	turn_right(t_info *info);
+int	mouse_enter(t_info *info);
+int	mouse_exit(t_info *info);
+void	init_floor_casting(t_info *info, t_ray *r);
+void	cast_floor(t_info *info);
+void	draw_floor1(t_info *info, t_ray *r);
+void	draw_floor2(t_info *info, t_ray *r, int stripe);
 #endif

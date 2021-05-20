@@ -6,13 +6,13 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 15:22:02 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:15:28 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/19 06:42:34 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 #include <math.h>
-#include <stdio.h>
+
 void	select_texture(t_info *info, t_ray *r)
 {
 	if (r->side == 0 && r->step.x < 0)

@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/17 20:17:46 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/19 05:26:58 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ static void	init_game(t_info *info)
 	init_buf(info);
 	init_textures(info);
 	init_sprite_info(info);
+	info->mouse.x = -1;
+	info->old_mouse.x = -1;
+	info->exit = 0;
 }
 
 static void	check_args(t_info *info, int argc, char **argv)
@@ -110,6 +113,9 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(info.mlx, game_loop, &info);
 	mlx_hook(info.win, 2, 1L << 0, &key_press, &info);
 	mlx_hook(info.win, 3, 1L << 1, &key_release, &info);
+	mlx_hook(info.win, 6, 1L << 6, &mouse_movement, &info);
+	mlx_hook(info.win, 7, 1L << 4, &mouse_enter, &info);
+	mlx_hook(info.win, 8, 1L << 5, &mouse_exit, &info);
 	mlx_hook(info.win, 17, 1L << 17, &successful_exit, &info);
 	mlx_loop(info.mlx);
 }

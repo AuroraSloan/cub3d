@@ -6,13 +6,13 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 15:15:16 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:15:19 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/19 18:01:48 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 #include <math.h>
-
+#include <stdio.h>
 static void	set_ray_distance(t_info *info, t_ray *r)
 {
 	if (r->dir.x < 0)
@@ -69,7 +69,7 @@ void	calculate_texture_stripe(t_info *info, t_ray *r)
 static void	draw_buffer(t_info *info, t_ray r, int stripe)
 {
 	int	sky;
-	int	floor;
+	//int	floor;
 	int	wall;
 	int	pixel;
 
@@ -86,9 +86,9 @@ static void	draw_buffer(t_info *info, t_ray r, int stripe)
 		info->buf[wall][stripe] = pixel;
 		wall++;
 	}
-	floor = r.draw_end;
-	while (floor < info->hght)
-		info->buf[floor++][stripe] = info->f_color;
+	//floor = r.draw_end;
+	//while (floor < info->hght)
+	//	info->buf[floor++][stripe] = info->f_color;
 }
 
 void	configure_image(t_info *info)
@@ -96,7 +96,8 @@ void	configure_image(t_info *info)
 	t_ray	r;
 	int		stripe;
 
-	stripe = 0;
+	stripe = 0;	
+//	cast_floor(info);	
 	while (stripe < info->wid)
 	{
 		init_ray_information(info, &r, stripe);
@@ -106,6 +107,8 @@ void	configure_image(t_info *info)
 		calculate_texture_stripe(info, &r);
 		draw_buffer(info, r, stripe);
 		info->sp_buf[stripe] = r.dist;
+		draw_floor1(info, &r);	
+		draw_floor2(info, &r, stripe);
 		stripe++;
 	}
 	if (info->sp_count > 0)
