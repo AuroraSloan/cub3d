@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/19 03:47:23 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/20 11:15:03 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static void	init_game(t_info *info)
 	info->col_count = 0;
 	info->bmp = 0;
 	count_map_rows(info);
+	if (info->row_count > 100 || info->col_count > 100)
+		free_exit(info, "Please reduce size of map");
 	parse_cub_info(info);
 	init_buf(info);
 	init_textures(info);

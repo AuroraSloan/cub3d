@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/19 16:36:07 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 22:41:23 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ typedef struct s_i_vec
 	int	y;
 }				t_i_vec;
 
-typedef struct s_pair
+typedef struct s_arrange
 {
-	double	first;
-	int		second;
-}				t_pair;
+	double	a;
+	int		b;
+	int		c;
+}				t_arrange;
 
 typedef struct s_keys
 {
@@ -87,7 +88,7 @@ typedef struct s_info
 	char	*we_path;
 	char	*ea_path;
 	char	*s_path;
-	int		f_color;
+	char	*f_path;
 	int		c_color;
 	int		**map;
 	int		map_flag;
@@ -119,6 +120,7 @@ typedef struct s_info
 	int		*sp_ordr;
 	t_d_vec	*sprt;
 	int		bmp;
+	int		*sp_tex;
 	t_i_vec	mouse;
 	t_i_vec	old_mouse;
 	int		exit;
@@ -185,7 +187,7 @@ void	parse_cub_info(t_info *info);
 int		create_rgb(int r, int g, int b);
 int		find_next_color(t_info *info, int fd, char *line, int i);
 int		find_first_color(t_info *info, int fd, char *line);
-void	init_ea_s_paths(t_info *info, char *line, int fd);
+void	init_ea_s_f_paths(t_info *info, char *line, int fd);
 int		is_start(char start);
 void	init_n_s_vectors(t_info *info);
 void	init_w_e_vectors(t_info *info);
@@ -209,8 +211,8 @@ void	turn_left(t_info *info);
 void	turn_right(t_info *info);
 int	mouse_enter(t_info *info);
 int	mouse_exit(t_info *info);
-void	init_floor_casting(t_info *info, t_ray *r);
-void	cast_floor(t_info *info);
-void	draw_floor1(t_info *info, t_ray *r);
-void	draw_floor2(t_info *info, t_ray *r, int stripe);
+void	calc_floor_wall(t_info *info, t_ray *r);
+void	draw_floor(t_info *info, t_ray *r, int stripe);
+void	init_sptext_info(t_info *info, int i, int j, int count);
+
 #endif

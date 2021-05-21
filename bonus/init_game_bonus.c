@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 21:24:35 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:17:07 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 21:22:40 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ void	init_pointers_keys(t_info *info)
 	info->we_path = NULL;
 	info->ea_path = NULL;
 	info->s_path = NULL;
+	info->f_path = NULL;
 	info->sp_buf = NULL;
 	info->sp_dist = NULL;
 	info->sp_ordr = NULL;
 	info->sprt = NULL;
+	info->sp_tex = NULL;
 	info->key.up = 0;
 	info->key.down = 0;
 	info->key.left = 0;
@@ -54,6 +56,9 @@ void	init_sprite_info(t_info *info)
 		free_exit(info, "Memory allocation error");
 	info->sprt = (t_d_vec *)malloc(sizeof(t_d_vec) * info->sp_count);
 	if (!(info->sprt))
+		free_exit(info, "Memory allocation error");
+	info->sp_tex = (int *)malloc(sizeof(int) * info->sp_count);
+	if (!(info->sp_tex))
 		free_exit(info, "Memory allocation error");
 }
 

@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 21:00:55 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:16:03 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 22:44:19 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,21 @@ static void	create_bmih(t_info *info, int fd)
 	unsigned int	info_header_size;
 	unsigned int	color_planes;
 	unsigned int	bits_per_pixel;
+	int				pixels_per_meter;
 
-	info_header_size = 12;
+	info_header_size = 40;
 	color_planes = 1;
 	bits_per_pixel = 32;
+	pixels_per_meter = 0;
 	write(fd, &info_header_size, 4);
-	write(fd, &info->wid, 2);
-	write(fd, &info->hght, 2);
+	write(fd, &info->wid, 4);
+	write(fd, &info->hght, 4);
 	write(fd, &color_planes, 2);
 	write(fd, &bits_per_pixel, 2);
+	write(fd, "\0\0\0\0\0\0\0\0", 8);
+	write(fd, &pixels_per_meter, 4);
+	write(fd, &pixels_per_meter, 4);
+	write(fd, "\0\0\0\0\0\0\0\0", 8);
 }
 
 static void	write_rpd(t_info *info, int fd)

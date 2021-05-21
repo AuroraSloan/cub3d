@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 15:36:41 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:16:27 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 22:39:49 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ static void	locate_sprites(t_info *info)
 		j = 0;
 		while (j < info->col_count)
 		{
-			if (info->map[i][j] == 2)
-			{
+			if (info->map[i][j] == 2 || info->map[i][j] == 3
+				|| info->map[i][j] == 4)
+			{	
+				init_sptext_info(info, i, j, count);
 				info->sprt[count].x = i + .5;
 				info->sprt[count].y = j + .5;
 				count++;
@@ -80,7 +82,7 @@ static void	calc_sprite_info(t_info *info, t_sprite *s)
 		s->draw_end.x = info->wid - 1;
 }
 
-static void	configure_sprite(t_info *info, t_sprite s, int stripe)
+static void	configure_sprite(t_info *info, t_sprite s, int stripe, int i)
 {
 	while (stripe < s.draw_end.x)
 	{
@@ -95,7 +97,7 @@ static void	configure_sprite(t_info *info, t_sprite s, int stripe)
 				s.d = (s.col - s.mv_screen) * 256 - info->hght
 					* 128 + s.hght * 128;
 				s.tex.y = ((s.d * TEX_HGHT) / s.hght) / 256;
-				s.color = info->texture[4][TEX_WID
+				s.color = info->texture[info->sp_tex[i]][TEX_WID
 					* s.tex.y + s.tex.x];
 				if ((s.color & 0X00FFFFFF) != 0)
 					info->buf[s.col][stripe] = s.color;
@@ -122,7 +124,7 @@ void	draw_sprites(t_info *info)
 		s.loc.y = info->sprt[info->sp_ordr[i]].y - info->pos.y;
 		calc_sprite_info(info, &s);
 		stripe = s.draw_start.x;
-		configure_sprite(info, s, stripe);
+		configure_sprite(info, s, stripe, i);
 		i++;
 	}
 }

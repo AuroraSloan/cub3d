@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/13 20:35:58 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:16:46 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 21:22:55 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	free_paths(t_info *info)
 		safe_free(info->ea_path);
 	if (info->s_path != NULL)
 		safe_free(info->s_path);
+	if (info->f_path != NULL)
+		safe_free(info->f_path);
 }
 
 static void	free_matrices(t_info *info)
@@ -73,6 +75,8 @@ void	free_memory(t_info *info)
 		safe_free(info->sp_ordr);
 	if (info->sprt != NULL)
 		safe_free(info->sprt);
+	if (info->sp_tex != NULL)
+		safe_free(info->sp_tex);
 	if (info->img.img != NULL)
 		mlx_destroy_image(info->mlx, info->img.img);
 	if (info->win != NULL)

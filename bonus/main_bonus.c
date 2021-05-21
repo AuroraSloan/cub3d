@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/19 05:26:58 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 22:44:02 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,11 @@ static void	init_game(t_info *info)
 	info->mlx = mlx_init();
 	if (!(info->mlx))
 		free_exit(info, "Connection to X-server Failed");
-	info->mv_spd = .04;
-	info->rot_spd = .02;
+	info->mv_spd = .06;
+	info->rot_spd = .04;
 	info->map_flag = -1;
 	info->buf_flag = -1;
 	info->texture_flag = -1;
-	info->f_color = -1;
 	info->c_color = -1;
 	info->wid = 0;
 	info->hght = 0;

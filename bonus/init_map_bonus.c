@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 14:05:15 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:17:20 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 22:44:36 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void	init_map_row(t_info *info, int fd, char *line)
 	info->map_flag++;
 	while (info->col < len)
 	{
-		if (line[info->col] == '2')
+		if (line[info->col] == '2' || line[info->col] == '3'
+			|| line[info->col] == '4')
 			info->sp_count++;
 		if (is_start(line[info->col]))
 			set_start(info, line[info->col], fd, line);
@@ -48,7 +49,7 @@ static void	init_map_row(t_info *info, int fd, char *line)
 			info->map[info->row][info->col] = 0;
 		else
 			info->map[info->row][info->col] = line[info->col] - '0';
-		if (info->map[info->row][info->col] > 2)
+		if (info->map[info->row][info->col] > 4)
 			free_line(info, fd, line, "invalid character in map");
 		info->col++;
 	}

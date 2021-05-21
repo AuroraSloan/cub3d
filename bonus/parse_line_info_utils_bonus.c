@@ -6,7 +6,7 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 13:50:39 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:19:29 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 19:09:55 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	find_first_color(t_info *info, int fd, char *line)
 	return (i);
 }
 
-void	init_ea_s_paths(t_info *info, char *line, int fd)
+void	init_ea_s_f_paths(t_info *info, char *line, int fd)
 {
 	if (ft_memcmp(line, "EA", 2) == 0)
 	{
@@ -57,6 +57,14 @@ void	init_ea_s_paths(t_info *info, char *line, int fd)
 			free_line(info, fd, line, "Mulptiple S path info");
 		info->s_path = ft_strtrim(&line[1], " ");
 		if (!(info->s_path))
+			free_line(info, fd, line, "can't allocate");
+	}
+	else if (ft_memcmp(line, "F ", 2) == 0)
+	{
+		if (info->f_path != NULL)
+			free_line(info, fd, line, "Mulptiple F path info");
+		info->f_path = ft_strtrim(&line[1], " ");
+		if (!(info->f_path))
 			free_line(info, fd, line, "can't allocate");
 	}
 }

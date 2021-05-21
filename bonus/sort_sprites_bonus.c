@@ -6,18 +6,32 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 15:39:58 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:19:43 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 22:37:56 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 #include <stdlib.h>
 
-static void	arrange_sprites(t_info *info, t_pair *sp)
+static void	set_order(t_arrange *sp, int j)
 {
-	t_pair	tmp;
-	int		i;
-	int		j;
+	t_arrange	tmp;
+
+	tmp.a = sp[j].a;
+	tmp.b = sp[j].b;
+	tmp.c = sp[j].c;
+	sp[j].a = sp[j + 1].a;
+	sp[j].b = sp[j + 1].b;
+	sp[j].c = sp[j + 1].c;
+	sp[j + 1].a = tmp.a;
+	sp[j + 1].b = tmp.b;
+	sp[j + 1].c = tmp.c;
+}
+
+static void	arrange_sprites(t_info *info, t_arrange *sp)
+{	
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < info->sp_count)
@@ -25,15 +39,8 @@ static void	arrange_sprites(t_info *info, t_pair *sp)
 		j = 0;
 		while (j < info->sp_count - 1)
 		{
-			if (sp[j].first > sp[j + 1].first)
-			{
-				tmp.first = sp[j].first;
-				tmp.second = sp[j].second;
-				sp[j].first = sp[j + 1].first;
-				sp[j].second = sp[j + 1].second;
-				sp[j + 1].first = tmp.first;
-				sp[j + 1].second = tmp.second;
-			}
+			if (sp[j].a > sp[j + 1].a)
+				set_order(sp, j);
 			j++;
 		}
 		i++;
@@ -42,25 +49,27 @@ static void	arrange_sprites(t_info *info, t_pair *sp)
 
 void	sort_sprites(t_info *info)
 {
-	t_pair	*sp;
-	int		i;
+	t_arrange	*sp;
+	int			i;
 
 	i = 0;
-	sp = (t_pair *)malloc(sizeof(t_pair) * info->sp_count);
+	sp = (t_arrange *)malloc(sizeof(t_arrange) * info->sp_count);
 	if (!(sp))
 		free_exit(info, "could not allocate memory");
 	while (i < info->sp_count)
 	{
-		sp[i].first = info->sp_dist[i];
-		sp[i].second = info->sp_ordr[i];
+		sp[i].a = info->sp_dist[i];
+		sp[i].b = info->sp_ordr[i];
+		sp[i].c = info->sp_tex[i];
 		i++;
 	}
 	arrange_sprites(info, sp);
 	i = 0;
 	while (i < info->sp_count)
 	{
-		info->sp_dist[i] = sp[info->sp_count - i - 1].first;
-		info->sp_ordr[i] = sp[info->sp_count - i - 1].second;
+		info->sp_dist[i] = sp[info->sp_count - i - 1].a;
+		info->sp_ordr[i] = sp[info->sp_count - i - 1].b;
+		info->sp_tex[i] = sp[info->sp_count - i - 1].c;
 		i++;
 	}
 	safe_free(sp);
