@@ -6,7 +6,7 @@
 /*   By: jthompso <jthompso@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 13:32:40 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/21 22:41:23 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/22 03:34:07 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,17 @@ typedef struct s_keys
 	int	s;
 	int	d;
 }				t_keys;
+typedef struct s_mini_map
+{
+	int	map_i;
+	int	map_j;
+	int	mm_i;
+	int	mm_j;
+	int	mm_wid;
+	int	mm_hght;
+	int	wid_cnt;
+	int	hght_cnt;
+}				t_mini_map;
 
 typedef struct s_info
 {
@@ -123,6 +134,8 @@ typedef struct s_info
 	int		*sp_tex;
 	t_i_vec	mouse;
 	t_i_vec	old_mouse;
+	int		mini_map;
+	int		cucco;
 	int		exit;
 }					t_info;
 
@@ -214,5 +227,8 @@ int	mouse_exit(t_info *info);
 void	calc_floor_wall(t_info *info, t_ray *r);
 void	draw_floor(t_info *info, t_ray *r, int stripe);
 void	init_sptext_info(t_info *info, int i, int j, int count);
+void	check_mini_map(t_info *info);
+void	draw_mini_map(t_info *info);
+void	manage_items(t_info *info);
 
 #endif

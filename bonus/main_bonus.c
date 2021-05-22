@@ -6,7 +6,7 @@
 /*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/21 22:44:02 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/22 05:13:26 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,16 @@ static void	filename_check(t_info *info, char *filename)
 
 static int	game_loop(t_info *info)
 {
+	char	*number;
+
 	move_player(info);
 	configure_image(info);
 	draw_image(info);
+	number = ft_itoa(info->cucco);
+	mlx_string_put(info->mlx, info->win, info->wid - 120, 30,
+		0X00000000, "cucco count");
+	mlx_string_put(info->mlx, info->win, info->wid - 30, 30,
+		0X00000000, number);
 	return (0);
 }
 
@@ -69,6 +76,8 @@ static void	init_game(t_info *info)
 	info->row_count = 0;
 	info->col_count = 0;
 	info->bmp = 0;
+	info->mini_map = 0;
+	info->cucco = 0;
 	count_map_rows(info);
 	parse_cub_info(info);
 	init_buf(info);

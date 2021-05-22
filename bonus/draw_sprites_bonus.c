@@ -6,10 +6,10 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 15:36:41 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/21 22:39:49 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/21 23:29:36 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>
 #include "../includes/cub3d_bonus.h"
 #include <math.h>
 

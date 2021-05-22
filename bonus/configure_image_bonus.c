@@ -6,11 +6,12 @@
 /*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
 /*  Created: 2021/05/14 15:15:16 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/21 22:46:55 by jthompso           ###   ########.fr      */
+/*  Updated: 2021/05/22 03:36:15 by jthompso           ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>
 #include "../includes/cub3d_bonus.h"
+#include "../libraries/libmlx_Linux/mlx.h"
 #include <math.h>
 
 static void	set_ray_distance(t_info *info, t_ray *r)
@@ -93,6 +94,9 @@ void	configure_image(t_info *info)
 	int		stripe;
 
 	stripe = 0;
+	if (info->mini_map == 0)
+		check_mini_map(info);
+	manage_items(info);
 	while (stripe < info->wid)
 	{
 		init_ray_information(info, &r, stripe);
@@ -108,4 +112,6 @@ void	configure_image(t_info *info)
 	}
 	if (info->sp_count > 0)
 		draw_sprites(info);
+	if (info->mini_map == 1)
+		draw_mini_map(info);
 }
