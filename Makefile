@@ -1,4 +1,5 @@
 NAME = cub3D
+B_NAME = CUB3D
 LIBS = ./libraries/libft/libft.a ./libraries/libmlx_Linux/libmlx_Linux.a
 SRC_DIR = srcs/
 SRC_FILES = main.c free_memory.c failed_exit.c create_bmp.c init_game.c \
@@ -25,17 +26,19 @@ CFLAGS = -Wall -Wextra -Werror
 INCS = -I./includes
 USR_LIBS = -L/usr/lib -lXext -lm -lX11
 
-$(NAME):$(OBJS)
+$(NAME): $(OBJS) includes/cub3d.h
 	make -C libraries/libft
 	make -C libraries/libmlx_Linux
 	$(CC) -o $(NAME) $(OBJS) $(LIBS) $(USR_LIBS) $(INCS)
 
-all:$(NAME)
-
-bonus: $(B_OBJS)
+$(B_NAME): $(B_OBJS) includes/cub3d_bonus.h
 	make -C libraries/libft
 	make -C libraries/libmlx_Linux
 	$(CC) -o $(NAME) $(B_OBJS) $(LIBS) $(USR_LIBS) $(INCS)
+
+all: $(NAME)
+
+bonus: $(B_NAME) 
 
 clean:
 	rm -f $(OBJS)
