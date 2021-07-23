@@ -9,7 +9,7 @@ git clone https://github.com/AuroraSloan/cub3d
 ```
 ----
 ## Usage
-First, create the executables with make
+First, create the executable with make
 ```bash
 make - compiles the cub3d executable
 make clean - removes all .o files
