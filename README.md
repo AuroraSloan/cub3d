@@ -5,7 +5,7 @@ The goal of this project was to become comfortable with ray-casting by creating 
 ----
 ### Installation
 ```bash
-git clone https://github.com/AuroraSloan/cub3d
+git clone https://github.com/AuroraSloan/cub3d.git
 ```
 ----
 ## Usage
