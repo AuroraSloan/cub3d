@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  draw_floor_bonus.c                                   :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/19 06:04:11 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/21 19:28:07 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 void	calc_floor_wall(t_info *info, t_ray *r)
 {	

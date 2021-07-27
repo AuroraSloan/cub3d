@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  draw_mini_map.c                                      :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/22 02:38:35 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/22 03:27:14 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 static void	draw_mm_buf(t_info *info, t_mini_map *mm, int color)
 {

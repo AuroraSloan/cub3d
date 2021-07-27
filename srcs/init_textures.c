@@ -1,28 +1,15 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  init_textures.c                                      :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/13 21:38:49 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/15 21:19:51 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
 #include "../libraries/libmlx_Linux/mlx.h"
 #include "../libraries/libft/libft.h"
 #include <stdlib.h>
 
-static int	path_filename_check(char *filename)
+static void	path_filename_check(t_info *info, char *filename)
 {
 	int	start;
 
 	start = ft_strlen(filename) - 4;
 	if (ft_memcmp(&filename[start], ".xpm", 4) != 0)
-		return (-1);
-	return (1);
+		free_exit(info, "please use.xpm images");
 }
 
 static void	load_image(t_info *info, int *texture, char *path, t_tex *tex)
@@ -52,28 +39,23 @@ static void	load_image(t_info *info, int *texture, char *path, t_tex *tex)
 static void	load_textures(t_info *info)
 {
 	t_tex	tex;
-	int		check;
 
-	check = path_filename_check(info->no_path);
-	if (check == -1)
-		free_exit(info, "please use .xpm images");
-	check = path_filename_check(info->so_path);
-	if (check == -1)
-		free_exit(info, "please use .xpm images");
-	check = path_filename_check(info->we_path);
-	if (check == -1)
-		free_exit(info, "please use .xpm images");
-	check = path_filename_check(info->ea_path);
-	if (check == -1)
-		free_exit(info, "please use .xpm images");
-	check = path_filename_check(info->s_path);
-	if (check == -1)
-		free_exit(info, "please use .xpm images");
+	path_filename_check(info, info->no_path);
+	path_filename_check(info, info->so_path);
+	path_filename_check(info, info->we_path);
+	path_filename_check(info, info->ea_path);
+	path_filename_check(info, info->s_path);
+	path_filename_check(info, info->f_path);
+	path_filename_check(info, "images/sprites/map.xpm");
+	path_filename_check(info, "images/sprites/cucco.xpm");
 	load_image(info, info->texture[0], info->no_path, &tex);
 	load_image(info, info->texture[1], info->so_path, &tex);
 	load_image(info, info->texture[2], info->we_path, &tex);
 	load_image(info, info->texture[3], info->ea_path, &tex);
 	load_image(info, info->texture[4], info->s_path, &tex);
+	load_image(info, info->texture[5], info->f_path, &tex);
+	load_image(info, info->texture[6], "images/sprites/map.xpm", &tex);
+	load_image(info, info->texture[7], "images/sprites/cucco.xpm", &tex);
 }
 
 void	init_textures(t_info *info)
@@ -82,11 +64,11 @@ void	init_textures(t_info *info)
 	int	j;
 
 	i = 0;
-	info->texture = (int **)malloc(sizeof(int *) * 5);
+	info->texture = (int **)malloc(sizeof(int *) * 8);
 	if (!(info->texture))
 		free_exit(info, "Memory allocation error");
 	info->texture_flag++;
-	while (i < 5)
+	while (i < 8)
 	{
 		info->texture[i] = (int *)malloc(sizeof(int) * (TEX_HGHT * TEX_WID));
 		if (!(info->texture[i]))
@@ -95,7 +77,7 @@ void	init_textures(t_info *info)
 		i++;
 	}
 	i = 0;
-	while (i < 5)
+	while (i < 8)
 	{
 		j = 0;
 		while (j < TEX_HGHT * TEX_WID)

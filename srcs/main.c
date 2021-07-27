@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*  main.c                                               :+:      :+:    :+:  */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jthompso <jthomps@student.42tokyo.jp>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/14 15:19:21 by jthompso          #+#    #+#             */
-/*  Updated: 2021/05/20 11:15:03 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
 #include "../libraries/libft/libft.h"
 #include "../libraries/libmlx_Linux/mlx.h"
@@ -27,18 +15,18 @@ static void	filename_check(t_info *info, char *filename)
 
 	start = ft_strlen(filename) - 4;
 	if (ft_memcmp(&filename[start], ".cub", 4) != 0)
-		failed_exit("The second argument should be a .cub file");
+		ft_failed_exit("The second argument should be a .cub file", NULL);
 	info->name = filename;
 	buf = malloc((int)10 + 1);
 	if (!buf)
-		failed_exit("memory error");
+		ft_failed_exit("memory error", NULL);
 	fd = open(filename, O_RDONLY);
 	ret = read(fd, buf, 10);
 	if (ret == -1)
 	{
 		safe_free(buf);
 		close(fd);
-		failed_exit("Check .cub file is correct type of file");
+		ft_failed_exit("Check .cub file is correct type of file", NULL);
 	}
 	safe_free(buf);
 	close(fd);
@@ -46,9 +34,17 @@ static void	filename_check(t_info *info, char *filename)
 
 static int	game_loop(t_info *info)
 {
+	char	*number;
+
 	move_player(info);
 	configure_image(info);
 	draw_image(info);
+	number = ft_itoa(info->cucco);
+	mlx_string_put(info->mlx, info->win, info->wid - 120, 30,
+		0X00000000, "cucco count");
+	mlx_string_put(info->mlx, info->win, info->wid - 30, 30,
+		0X00000000, number);
+	ft_free(number);
 	return (0);
 }
 
@@ -59,35 +55,37 @@ static void	init_game(t_info *info)
 	if (!(info->mlx))
 		free_exit(info, "Connection to X-server Failed");
 	info->mv_spd = .04;
-	info->rot_spd = .02;
+	info->rot_spd = .03;
 	info->map_flag = -1;
 	info->buf_flag = -1;
 	info->texture_flag = -1;
-	info->f_color = -1;
 	info->c_color = -1;
 	info->wid = 0;
 	info->hght = 0;
 	info->row_count = 0;
 	info->col_count = 0;
 	info->bmp = 0;
+	info->mini_map = 0;
+	info->cucco = 0;
 	count_map_rows(info);
-	if (info->row_count > 100 || info->col_count > 100)
-		free_exit(info, "Please reduce size of map");
 	parse_cub_info(info);
 	init_buf(info);
 	init_textures(info);
 	init_sprite_info(info);
+	info->mouse.x = -1;
+	info->old_mouse.x = -1;
+	info->exit = 0;
 }
 
 static void	check_args(t_info *info, int argc, char **argv)
 {
 	info->save = 0;
 	if (argc > 3)
-		failed_exit("Too many arguments");
+		ft_failed_exit("Too many arguments", NULL);
 	else if (argc < 2)
-		failed_exit("Please select which .cub file to read");
+		ft_failed_exit("Please select which .cub file to read", NULL);
 	else if (argc == 3 && (ft_memcmp("--save", argv[2], 6) != 0))
-		failed_exit("Second argument should be --save");
+		ft_failed_exit("Second argument should be --save", NULL);
 	if (argc == 3 && (ft_memcmp("--save", argv[2], 6) == 0))
 		info->save = 1;
 }
@@ -112,6 +110,9 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(info.mlx, game_loop, &info);
 	mlx_hook(info.win, 2, 1L << 0, &key_press, &info);
 	mlx_hook(info.win, 3, 1L << 1, &key_release, &info);
+	mlx_hook(info.win, 6, 1L << 6, &mouse_movement, &info);
+	mlx_hook(info.win, 7, 1L << 4, &mouse_enter, &info);
+	mlx_hook(info.win, 8, 1L << 5, &mouse_exit, &info);
 	mlx_hook(info.win, 17, 1L << 17, &successful_exit, &info);
 	mlx_loop(info.mlx);
 }

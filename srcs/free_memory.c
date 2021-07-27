@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  free_memory.c                                        :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/13 20:35:58 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/15 21:19:17 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
 #include "../libraries/libmlx_Linux/mlx.h"
 #include <stdlib.h>
@@ -32,6 +20,8 @@ static void	free_paths(t_info *info)
 		safe_free(info->ea_path);
 	if (info->s_path != NULL)
 		safe_free(info->s_path);
+	if (info->f_path != NULL)
+		safe_free(info->f_path);
 }
 
 static void	free_matrices(t_info *info)
@@ -73,6 +63,8 @@ void	free_memory(t_info *info)
 		safe_free(info->sp_ordr);
 	if (info->sprt != NULL)
 		safe_free(info->sprt);
+	if (info->sp_tex != NULL)
+		safe_free(info->sp_tex);
 	if (info->img.img != NULL)
 		mlx_destroy_image(info->mlx, info->img.img);
 	if (info->win != NULL)

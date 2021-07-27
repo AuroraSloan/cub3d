@@ -1,30 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  failed_exit.c                                        :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/13 20:52:32 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 17:36:03 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
 #include "../libraries/libft/libft.h"
 #include <unistd.h>
 
-void	failed_exit(char *exit_status)
-{
-	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(exit_status, 2);
-	exit(EXIT_FAILURE);
-}
-
 void	free_exit(t_info *info, char *exit_status)
 {
 	free_memory(info);
-	failed_exit(exit_status);
+	ft_failed_exit(exit_status, NULL);
 }
 
 void	free_line(t_info *info, int fd, char *line, char *exit_status)

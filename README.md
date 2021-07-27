@@ -17,9 +17,9 @@ make clean - removes all .o files
 make fclean - removes all .o files and the executable
 make re - removes all .o files and all executable before recompiling the program
 ```
-In order to run the game window, run the executable with a map of your choice.
+In order to run the game window, run the executable with the .cub file.
 ```bash
-./cub3d maps/test.cub
+./cub3d maps/mabe_library.cub
 ```
 Instead of playing the game, an image (in the players initial point of view) will be saved as a .bmp file with the following command:
 ```bash

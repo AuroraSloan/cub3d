@@ -1,22 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jthompso <jthompso@student.42tokyo.>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/13 18:41:55 by jthompso          #+#    #+#             */
-/*   Updated: 2021/05/13 18:41:56 by jthompso         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	unsigned char	*new_s1;
 	unsigned char	*new_s2;
-	size_t			i;
+	size_t		i;
 
 	new_s1 = (unsigned char *)s1;
 	new_s2 = (unsigned char *)s2;

@@ -1,17 +1,53 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  configure_image_utils.c                              :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/14 15:22:02 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/22 05:18:54 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
 #include <math.h>
+
+void	check_mini_map(t_info *info)
+{
+	if (info->map[(int)(info->pos.x + .1)][(int)info->pos.y] == 3)
+	{
+		info->map[(int)(info->pos.x + .1)][(int)info->pos.y] = 0;
+		info->mini_map = 1;
+	}
+	else if (info->map[(int)info->pos.x][(int)(info->pos.y + .1)] == 3)
+	{
+		info->map[(int)info->pos.x][(int)(info->pos.y + .1)] = 0;
+		info->mini_map = 1;
+	}
+	if (info->map[(int)(info->pos.x - .1)][(int)info->pos.y] == 3)
+	{
+		info->map[(int)(info->pos.x - .1)][(int)info->pos.y] = 0;
+		info->mini_map = 1;
+	}
+	else if (info->map[(int)info->pos.x][(int)(info->pos.y - .1)] == 3)
+	{
+		info->map[(int)info->pos.x][(int)(info->pos.y - .1)] = 0;
+		info->mini_map = 1;
+	}
+}
+
+void	manage_items(t_info *info)
+{
+	if (info->map[(int)(info->pos.x + .1)][(int)info->pos.y] == 4)
+	{
+		info->map[(int)(info->pos.x + .1)][(int)info->pos.y] = 0;
+		info->cucco++;
+	}
+	else if (info->map[(int)info->pos.x][(int)(info->pos.y + .1)] == 4)
+	{
+		info->map[(int)info->pos.x][(int)(info->pos.y + .1)] = 0;
+		info->cucco++;
+	}
+	if (info->map[(int)(info->pos.x - .1)][(int)info->pos.y] == 4)
+	{
+		info->map[(int)(info->pos.x - .1)][(int)info->pos.y] = 0;
+		info->cucco++;
+	}
+	else if (info->map[(int)info->pos.x][(int)(info->pos.y - .1)] == 4)
+	{
+		info->map[(int)info->pos.x][(int)(info->pos.y - .1)] = 0;
+		info->cucco++;
+	}
+}
 
 void	select_texture(t_info *info, t_ray *r)
 {

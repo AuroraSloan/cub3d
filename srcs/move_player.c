@@ -1,19 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  move_player.c                                        :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/14 14:54:34 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/15 21:20:03 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
 #include <math.h>
 
-static void	turn_left(t_info *info)
+void	turn_left(t_info *info)
 {
 	double	old_dir;
 	double	old_cam;
@@ -30,7 +18,7 @@ static void	turn_left(t_info *info)
 		+ info->cam.y * cos(info->rot_spd);
 }
 
-static void	turn_right(t_info *info)
+void	turn_right(t_info *info)
 {
 	double	old_dir;
 	double	old_cam;
@@ -93,9 +81,9 @@ static void	move_forwrd_backwrd(t_info *info)
 
 void	move_player(t_info *info)
 {
-	if (info->key.left)
+	if (info->key.left || (info->exit && info->mouse.x < info->old_mouse.x))
 		turn_left(info);
-	if (info->key.right)
+	if (info->key.right || (info->exit && info->mouse.x > info->old_mouse.x))
 		turn_right(info);
 	move_left_right(info);
 	move_forwrd_backwrd(info);

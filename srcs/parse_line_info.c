@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  parse_line_info.c                                    :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/13 21:55:06 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 15:38:00 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
 #include "../libraries/libft/libft.h"
 
@@ -39,10 +27,10 @@ static void	init_paths(t_info *info, char *line, int fd)
 		if (!(info->we_path))
 			free_line(info, fd, line, "can't allocate");
 	}
-	init_ea_s_paths(info, line, fd);
+	init_ea_s_f_paths(info, line, fd);
 }
 
-static int	init_c_f_color(t_info *info, char *line, int fd)
+static int	init_c_color(t_info *info, char *line, int fd)
 {
 	int		i;
 	int		rd;
@@ -99,17 +87,11 @@ void	parse_line_info(t_info *info, int fd, char *line)
 			free_line(info, fd, line, "multiple res information");
 		init_resolution(info, line, fd);
 	}
-	else if (line[0] == 'F')
-	{
-		if (info->f_color > -1)
-			free_line(info, fd, line, "Multiple F color info");
-		info->f_color = init_c_f_color(info, line, fd);
-	}
 	else if (line[0] == 'C')
 	{
 		if (info->c_color > -1)
 			free_line(info, fd, line, "Multiple C color info");
-		info->c_color = init_c_f_color(info, line, fd);
+		info->c_color = init_c_color(info, line, fd);
 	}
 	else
 		init_paths(info, line, fd);

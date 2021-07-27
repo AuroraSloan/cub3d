@@ -1,16 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  configure_image.c                                    :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/14 15:15:16 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 19:51:47 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
+#include "../libraries/libmlx_Linux/mlx.h"
 #include <math.h>
 
 static void	set_ray_distance(t_info *info, t_ray *r)
@@ -69,7 +58,6 @@ void	calculate_texture_stripe(t_info *info, t_ray *r)
 static void	draw_buffer(t_info *info, t_ray r, int stripe)
 {
 	int	sky;
-	int	floor;
 	int	wall;
 	int	pixel;
 
@@ -86,9 +74,6 @@ static void	draw_buffer(t_info *info, t_ray r, int stripe)
 		info->buf[wall][stripe] = pixel;
 		wall++;
 	}
-	floor = r.draw_end;
-	while (floor < info->hght)
-		info->buf[floor++][stripe] = info->f_color;
 }
 
 void	configure_image(t_info *info)
@@ -97,6 +82,9 @@ void	configure_image(t_info *info)
 	int		stripe;
 
 	stripe = 0;
+	if (info->mini_map == 0)
+		check_mini_map(info);
+	manage_items(info);
 	while (stripe < info->wid)
 	{
 		init_ray_information(info, &r, stripe);
@@ -106,8 +94,12 @@ void	configure_image(t_info *info)
 		calculate_texture_stripe(info, &r);
 		draw_buffer(info, r, stripe);
 		info->sp_buf[stripe] = r.dist;
+		calc_floor_wall(info, &r);
+		draw_floor(info, &r, stripe);
 		stripe++;
 	}
 	if (info->sp_count > 0)
 		draw_sprites(info);
+	if (info->mini_map == 1)
+		draw_mini_map(info);
 }

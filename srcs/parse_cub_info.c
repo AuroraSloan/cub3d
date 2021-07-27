@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                         :::      ::::::::  */
-/*  parse_cub_info.c                                     :+:      :+:    :+:  */
-/*                                                     +:+ +:+         +:+    */
-/*  By: jthompso <jthompso@student.42tokyo.jp>       +#+  +:+       +#+       */
-/*                                                 +#+#+#+#+#+   +#+          */
-/*  Created: 2021/05/13 21:45:42 by jthompso            #+#    #+#            */
-/*  Updated: 2021/05/17 20:19:06 by jthompso           ###   ########.fr      */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
 #include "../libraries/libmlx_Linux/mlx.h"
 #include "../libraries/libft/libft.h"
@@ -43,8 +31,8 @@ static void	cub_info_check(t_info *info, int fd, char *line)
 		free_line(info, fd, line, "Check EA path info or map location");
 	if (!info->s_path)
 		free_line(info, fd, line, "Check S path info or map location");
-	if (info->f_color == -1)
-		free_line(info, fd, line, "Check F color info or map location");
+	if (!info->f_path)
+		free_line(info, fd, line, "Check F path info or map location");
 	if (info->c_color == -1)
 		free_line(info, fd, line, "Check C color info or map location");
 }
@@ -94,6 +82,8 @@ void	parse_cub_info(t_info *info)
 	int		ret;
 
 	line = NULL;
+	if (info->row_count > 100 || info->col_count > 100)
+		free_exit(info, "Please reduce size of map");
 	fd = open(info->name, O_RDONLY);
 	check_failed_fd(info, fd);
 	while (is_not_map(line, fd, info))
