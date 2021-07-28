@@ -1,4 +1,4 @@
-gameplay
+./gameplay
 # cub3d
 [![jthompso's 42Project Score](https://badge42.herokuapp.com/api/project/jthompso/cub3d)](https://github.com/AuroraSloan/badge42)
 
