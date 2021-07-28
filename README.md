@@ -39,7 +39,7 @@ A saved image in the players initial point of view will be saved as a .bmp file 
 ``ESC`` or ``✖`` will allow you to safely exit the game.
 
 ## Plot
-Evil Ghini have taken over Mabe Village!
+Evil Ghini have taken over Mabe Village Library!
 
 Please save all the Cucco before it's too late. Don't leave anyone behind!
 
