@@ -45,6 +45,7 @@ static int	game_loop(t_info *info)
 	mlx_string_put(info->mlx, info->win, info->wid - 30, 30,
 		0X00000000, number);
 	ft_free(number);
+	number = NULL;
 	return (0);
 }
 
@@ -54,8 +55,8 @@ static void	init_game(t_info *info)
 	info->mlx = mlx_init();
 	if (!(info->mlx))
 		free_exit(info, "Connection to X-server Failed");
-	info->mv_spd = .04;
-	info->rot_spd = .03;
+	info->mv_spd = .06 ;
+	info->rot_spd = .04;
 	info->map_flag = -1;
 	info->buf_flag = -1;
 	info->texture_flag = -1;
