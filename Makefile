@@ -1,4 +1,4 @@
-NAME = cub3D
+NAME = cub3d
 LIBS = ./libraries/libft/libft.a ./libraries/libmlx_Linux/libmlx_Linux.a
 SRC_DIR = srcs/
 SRC_FILES = main.c free_memory.c failed_exit.c create_bmp.c init_game.c \
