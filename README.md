@@ -23,7 +23,7 @@ In order to run the game window, run the executable with the .cub file.
 ./cub3d maps/mabe_library.cub
 ```
 
-A saved image in the players initial point of view will be saved as a .bmp file with the following command:
+A saved image in the players initial point of view will be saved as a .bmp file with the following command instead of opening the game
 ```bash
 ./cub3d maps/mabe_library.cub --save
 ```
