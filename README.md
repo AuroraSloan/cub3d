@@ -1,5 +1,5 @@
 # cub3d	[![jthompso's 42Project Score](https://badge42.herokuapp.com/api/project/jthompso/cub3d)](https://github.com/AuroraSloan/badge42)
-
+test
 ![cucco gameplay](https://media.giphy.com/media/O9ufh6QIInY8ttgZaI/giphy.gif)
 
 The goal of this project was to become comfortable with ray-casting by creating a dynamic view inside a maze. The cub3d project is based on the classic Wolfenstein 3D game http://users.atw.hu/wolf3d/.
