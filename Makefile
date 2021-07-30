@@ -1,5 +1,5 @@
 NAME = cub3d
-LIBS = ./libraries/libft/libft.a libmlx.dylib #./libraries/libmlx_Linux/libmlx_Linux.a
+LIBS = ./libraries/libft/libft.a ./libraries/libmlx_Linux/libmlx_Linux.a
 SRC_DIR = srcs/
 SRC_FILES = main.c free_memory.c failed_exit.c create_bmp.c init_game.c \
 	init_textures.c parse_cub_info.c parse_line_info.c init_map.c \
@@ -12,23 +12,19 @@ OBJS = $(SRCS:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 INCS = -I./includes
-USR_LIBS = -lmlx -framework OpenGL -framework AppKit #-L/usr/lib -lXext -lX11 -lm
+USR_LIBS = -L/usr/lib -lXext -lX11 -lm
 
 $(NAME): $(OBJS) includes/cub3d.h
 	make -C libraries/libft
-#	make -C libraries/libmlx_Linux
-	make -C libraries/minilibx_mms
-	cp libraries/minilibx_mms/libmlx.dylib ./
+	make -C libraries/libmlx_Linux
 	$(CC) -o $(NAME) $(OBJS) $(LIBS) $(USR_LIBS) $(INCS)
 
 all: $(NAME)
 
 clean:
-	rm -f $(OBJS)
-	rm libmlx.dylib
+	rm -f $(OBJS)	
 	make clean -C libraries/libft
-#	make clean -C libraries/libmlx_Linux
-	make clean -C libraries/minilibx_mms
+	make clean -C libraries/libmlx_Linux
 
 fclean: clean
 	rm -f $(NAME)
