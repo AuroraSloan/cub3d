@@ -18,7 +18,7 @@ First, create the executable with make
 make - compiles the cub3d executable
 make clean - removes all .o files
 make fclean - removes all .o files and the executable
-make re - removes all .o files and all executable before recompiling the program
+make re - removes all .o files and the executable before recompiling the program
 ```
 In order to run the game window, run the executable with the .cub file.
 ```bash
