@@ -1,4 +1,4 @@
-# cub3d	[![jthompso's 42Project Score](https://badge42.herokuapp.com/api/project/jthompso/cub3d)](https://github.com/AuroraSloan/badge42)
+# cub3d
 
 ![cucco gameplay](https://media.giphy.com/media/O9ufh6QIInY8ttgZaI/giphy.gif)
 
