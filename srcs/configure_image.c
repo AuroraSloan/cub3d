@@ -1,5 +1,5 @@
 #include "../includes/cub3d.h"
-#include "../libraries/libmlx_Linux/mlx.h"
+#include "../libraries/minilibx_mms/mlx.h"
 #include <math.h>
 
 static void	set_ray_distance(t_info *info, t_ray *r)

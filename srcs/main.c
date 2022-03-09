@@ -1,6 +1,6 @@
 #include "../includes/cub3d.h"
 #include "../libraries/libft/libft.h"
-#include "../libraries/libmlx_Linux/mlx.h"
+#include "../libraries/minilibx_mms/mlx.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>

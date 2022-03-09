@@ -1,5 +1,5 @@
 #include "../includes/cub3d.h"
-#include "../libraries/libmlx_Linux/mlx.h"
+#include "../libraries/minilibx_mms/mlx.h"
 #include <stdlib.h>
 
 void	safe_free(void *ptr)
@@ -69,10 +69,6 @@ void	free_memory(t_info *info)
 		mlx_destroy_image(info->mlx, info->img.img);
 	if (info->win != NULL)
 		mlx_destroy_window(info->mlx, info->win);
-	if (info->mlx != NULL)
-	{
-		mlx_destroy_display(info->mlx);
-		mlx_loop_end(info->mlx);
+	if (info->mlx != NULL)	
 		safe_free(info->mlx);
-	}
 }

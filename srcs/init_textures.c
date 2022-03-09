@@ -1,5 +1,5 @@
 #include "../includes/cub3d.h"
-#include "../libraries/libmlx_Linux/mlx.h"
+#include "../libraries/minilibx_mms/mlx.h"
 #include "../libraries/libft/libft.h"
 #include <stdlib.h>
 

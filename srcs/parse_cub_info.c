@@ -1,21 +1,21 @@
 #include "../includes/cub3d.h"
-#include "../libraries/libmlx_Linux/mlx.h"
+#include "../libraries/minilibx_mms/mlx.h"
 #include "../libraries/libft/libft.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 
-static void	compare_resolution(t_info *info)
+/*static void	compare_resolution(t_info *info)
 {
 	int	screen_width;
 	int	screen_hight;
 
-	mlx_get_screen_size(info->mlx, &screen_width, &screen_hight);
+	//mlx_get_screen_size(info->mlx, &screen_width, &screen_hight);
 	if (info->wid > screen_width)
 		info->wid = screen_width;
 	if (info->hght > screen_hight)
 		info->hght = screen_hight;
-}
+}*/
 
 static void	cub_info_check(t_info *info, int fd, char *line)
 {
@@ -95,10 +95,10 @@ void	parse_cub_info(t_info *info)
 		parse_line_info(info, fd, line);
 	}	
 	cub_info_check(info, fd, line);
-	if (info->save)
+	/*if (info->save)
 		;
 	else
-		compare_resolution(info);
+		compare_resolution(info);*/
 	init_map(ret, info, fd, line);
 	check_closed_map(info, (int)info->pos.x, (int)info->pos.y);
 }
