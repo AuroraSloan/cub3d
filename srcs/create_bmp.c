@@ -9,7 +9,7 @@ static void	create_bmfh(t_info *info, int fd)
 	unsigned int	pixel_data_offset;
 	unsigned int	file_size;
 
-	pixel_data_offset = 14;
+	pixel_data_offset = 54;
 	file_size = pixel_data_offset + info->wid * info->hght * 4;
 	write(fd, "BM", 2);
 	write(fd, &file_size, 4);
