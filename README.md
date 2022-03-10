@@ -4,8 +4,6 @@
 
 The goal of this project was to become comfortable with ray-casting by creating a dynamic view inside a maze. The cub3d project is based on the classic Wolfenstein 3D game http://users.atw.hu/wolf3d/.
 
-Currently gameplay is only available on linux operating systems.
-
 ----
 ### Installation
 ```bash
