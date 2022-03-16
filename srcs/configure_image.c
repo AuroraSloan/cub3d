@@ -1,5 +1,4 @@
 #include "../includes/cub3d.h"
-#include "../libraries/minilibx_mms/mlx.h"
 #include <math.h>
 
 static void	set_ray_distance(t_info *info, t_ray *r)
@@ -51,8 +50,7 @@ void	calculate_texture_stripe(t_info *info, t_ray *r)
 	if (r->side == 1 && r->dir.y < 0)
 		info->tex.x = TEX_WID - info->tex.x - 1;
 	info->step_y = 1.0 * TEX_HGHT / r->wall_hight;
-	info->tex_pos = (r->draw_start - info->hght / 2 + r->wall_hight / 2)
-		* info->step_y;
+	info->tex_pos = (r->draw_start - info->hght / 2 + r->wall_hight / 2) * info->step_y;
 }
 
 static void	draw_buffer(t_info *info, t_ray r, int stripe)
@@ -69,8 +67,7 @@ static void	draw_buffer(t_info *info, t_ray r, int stripe)
 	{
 		info->tex.y = (int)info->tex_pos & (TEX_HGHT - 1);
 		info->tex_pos += info->step_y;
-		pixel = info->texture[info->tex_num][TEX_HGHT
-			* info->tex.y + info->tex.x];
+		pixel = info->texture[info->tex_num][TEX_HGHT * info->tex.y + info->tex.x];
 		info->buf[wall][stripe] = pixel;
 		wall++;
 	}

@@ -93,9 +93,7 @@ void	calculate_ray_distance(t_info *info, t_ray *r)
 			r->hit = 1;
 	}
 	if (r->side == 0)
-		r->dist = (r->map.x - info->pos.x
-				+ (1 - r->step.x) / 2) / r->dir.x;
+		r->dist = ((double)r->map.x - info->pos.x + (double)(1 - r->step.x) / 2) / r->dir.x;
 	else
-		r->dist = (r->map.y - info->pos.y
-				+ (1 - r->step.y) / 2) / r->dir.y;
+		r->dist = ((double)r->map.y - info->pos.y + (double)(1 - r->step.y) / 2) / r->dir.y;
 }

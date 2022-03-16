@@ -16,8 +16,7 @@ static void	locate_sprites(t_info *info)
 		j = 0;
 		while (j < (int)info->col_count)
 		{
-			if (info->map[i][j] == GHINI || info->map[i][j] == MAP
-				|| info->map[i][j] == CUCCO)
+			if (info->map[i][j] == GHINI || info->map[i][j] == MAP || info->map[i][j] == CUCCO)
 			{	
 				init_sptext_info(info, i, j, count);
 				info->sprt[count].x = i + .5;
@@ -38,22 +37,17 @@ static void	calc_sprite_dist(t_info *info)
 	while (i < info->sp_count)
 	{
 		info->sp_ordr[i] = i;
-		info->sp_dist[i] = ((info->pos.x - info->sprt[i].x)
-				* (info->pos.x - info->sprt[i].x)
-				+ (info->pos.y - info->sprt[i].y)
-				* (info->pos.y - info->sprt[i].y));
+		info->sp_dist[i] = ((info->pos.x - info->sprt[i].x) * (info->pos.x - info->sprt[i].x)
+				+ (info->pos.y - info->sprt[i].y) * (info->pos.y - info->sprt[i].y));
 		i++;
 	}
 }
 
 static void	calc_sprite_info(t_info *info, t_sprite *s)
 {
-	s->inv_det = 1.0 / (info->cam.x * info->dir.y
-			- info->dir.x * info->cam.y);
-	s->mod.x = s->inv_det * (info->dir.y * s->loc.x
-			- info->dir.x * s->loc.y);
-	s->mod.y = s->inv_det * (-info->cam.y * s->loc.x
-			+ info->cam.x * s->loc.y);
+	s->inv_det = 1.0 / (info->cam.x * info->dir.y - info->dir.x * info->cam.y);
+	s->mod.x = s->inv_det * (info->dir.y * s->loc.x - info->dir.x * s->loc.y);
+	s->mod.y = s->inv_det * (-info->cam.y * s->loc.x + info->cam.x * s->loc.y);
 	s->screen = (int)((info->wid / 2) * (1 + s->mod.x / s->mod.y));
 	s->mv_screen = (int)(0.0 / s->mod.y);
 	s->hght = (int)fabs((info->hght / s->mod.y) / 1);
@@ -76,19 +70,15 @@ static void	configure_sprite(t_info *info, t_sprite s, int stripe, int i)
 {
 	while (stripe < s.draw_end.x)
 	{
-		s.tex.x = (int)((256 * (stripe - (-s.wid / 2 + s.screen))
-					* TEX_WID / s.wid) / 256);
-		if (s.mod.y > 0 && stripe > 0 && stripe < info->wid
-			&& s.mod.y < info->sp_buf[stripe])
+		s.tex.x = (int)((256 * (stripe - (-s.wid / 2 + s.screen)) * TEX_WID / s.wid) / 256);
+		if (s.mod.y > 0 && stripe > 0 && stripe < info->wid && s.mod.y < info->sp_buf[stripe])
 		{
 			s.col = s.draw_start.y;
 			while (s.col < s.draw_end.y)
 			{
-				s.d = (s.col - s.mv_screen) * 256 - info->hght
-					* 128 + s.hght * 128;
+				s.d = (s.col - s.mv_screen) * 256 - info->hght * 128 + s.hght * 128;
 				s.tex.y = ((s.d * TEX_HGHT) / s.hght) / 256;
-				s.color = info->texture[info->sp_tex[i]][TEX_WID
-					* s.tex.y + s.tex.x];
+				s.color = info->texture[info->sp_tex[i]][TEX_WID * s.tex.y + s.tex.x];
 				if ((s.color & 0X00FFFFFF) != 0)
 					info->buf[s.col][stripe] = s.color;
 				s.col++;

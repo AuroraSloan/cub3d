@@ -1,4 +1,5 @@
 #include "../includes/cub3d.h"
+#include "../libraries/libft/libft.h"
 #include <stdlib.h>
 
 static void	free_tmp_map(t_info *info, int **tmp_map, int cnt, char *error)
@@ -50,20 +51,14 @@ void	check_closed_map(t_info *info, int x, int y)
 {
 	int	**tmp_map;
 	size_t  i;
-	size_t  j;
 
 	tmp_map = init_tmp_map(info);
 	i = 0;
 	while (i < info->row_count)
 	{
-		j = 0;
-		while (j < info->col_count)
-		{
-			tmp_map[i][j] = info->map[i][j];
-			j++;
-		}	
+        ft_memcpy(tmp_map[i], info->map[i], sizeof(int) * (int)info->col_count);
 		i++;
-	}	
+	}
 	floodfill(info, tmp_map, x, y);
 	free_tmp_map(info, tmp_map, (int)info->row_count, NULL);
 }
