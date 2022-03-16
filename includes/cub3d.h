@@ -3,6 +3,11 @@
 
 # define TEX_HGHT 64
 # define TEX_WID 64
+# define WALL 1
+# define GHINI 2
+# define MAP 3
+# define CUCCO 4
+# define FILL 5
 
 # ifdef __linux__
 #  define ESC 65307
@@ -25,6 +30,9 @@
 #  define S 1
 #  define D 2
 # endif
+
+# include <stdbool.h>
+# include <stddef.h>
 
 typedef struct s_img
 {
@@ -104,10 +112,10 @@ typedef struct s_info
 	int		c_color;
 	int		**map;
 	int		map_flag;
-	int		col;
-	int		col_count;
-	int		row;
-	int		row_count;	
+	size_t  col;
+	size_t  col_count;
+	size_t  row;
+	size_t  row_count;
 	int		save;
 	t_img	img;	
 	char	start;
@@ -196,7 +204,7 @@ void	init_sprite_info(t_info *info);
 void	init_buf(t_info *info);
 void	count_map_rows(t_info *info);
 void	init_textures(t_info *info);
-int		is_not_map(char *line, int fd, t_info *info);
+bool    is_map_row(char *line, int fd, t_info *info);
 void	parse_cub_info(t_info *info);
 int		create_rgb(int r, int g, int b);
 int		find_next_color(t_info *info, int fd, char *line, int i);
@@ -206,7 +214,7 @@ int		is_start(char start);
 void	init_n_s_vectors(t_info *info);
 void	init_w_e_vectors(t_info *info);
 void	init_map(int ret, t_info *info, int fd, char *line);
-int		is_valid_game_info(char *line);
+bool    is_valid_game_info(char *line);
 void	parse_line_info(t_info *info, int fd, char *line);
 void	check_closed_map(t_info *info, int x, int y);
 void	move_player(t_info *info);

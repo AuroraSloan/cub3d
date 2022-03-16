@@ -1,4 +1,5 @@
 #include "../includes/cub3d.h"
+#include "../libraries/libft/libft.h"
 #include <math.h>
 
 static void	locate_sprites(t_info *info)
@@ -9,13 +10,14 @@ static void	locate_sprites(t_info *info)
 
 	i = 0;
 	count = 0;
-	while (i < info->row_count)
+    ft_bzero(info->sprt, sizeof(t_d_vec) * info->sp_count);
+	while (i < (int)info->row_count)
 	{
 		j = 0;
-		while (j < info->col_count)
+		while (j < (int)info->col_count)
 		{
-			if (info->map[i][j] == 2 || info->map[i][j] == 3
-				|| info->map[i][j] == 4)
+			if (info->map[i][j] == GHINI || info->map[i][j] == MAP
+				|| info->map[i][j] == CUCCO)
 			{	
 				init_sptext_info(info, i, j, count);
 				info->sprt[count].x = i + .5;
@@ -55,10 +57,10 @@ static void	calc_sprite_info(t_info *info, t_sprite *s)
 	s->screen = (int)((info->wid / 2) * (1 + s->mod.x / s->mod.y));
 	s->mv_screen = (int)(0.0 / s->mod.y);
 	s->hght = (int)fabs((info->hght / s->mod.y) / 1);
-	s->draw_start.y = -s->hght / 2 + info->hght / 2 + 0.0;
+	s->draw_start.y = -s->hght / 2 + info->hght / 2 + 0;
 	if (s->draw_start.y < 0)
 		s->draw_start.y = 0;
-	s->draw_end.y = s->hght / 2 + info->hght / 2 + 0.0;
+	s->draw_end.y = s->hght / 2 + info->hght / 2 + 0;
 	if (s->draw_end.y >= info->hght)
 		s->draw_end.y = info->hght - 1;
 	s->wid = (int)fabs((info->hght / s->mod.y) / 1);

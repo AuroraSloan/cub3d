@@ -13,34 +13,32 @@ static void	free_tmp_map(t_info *info, int **tmp_map, int cnt, char *error)
 		free_exit(info, error);
 }
 
-static void	floodfill(t_info *info, int **tmp_map, int x, int y)
+static void	floodfill(t_info *info, int **tmp_map, size_t x, size_t y)
 {
-	if (x == 0 || x >= info->row_count - 1
-		|| y == 0 || y >= info->col_count - 1)
-		free_tmp_map(info, tmp_map, info->row_count, "map not closed");
-	tmp_map[x][y] = '#';
-	if (tmp_map[x - 1][y] != 1 && tmp_map[x - 1][y] != '#')
-		floodfill(info, tmp_map, x - 1, y);
-	if (tmp_map[x + 1][y] != 1 && tmp_map[x + 1][y] != '#')
-		floodfill(info, tmp_map, x + 1, y);
-	if (tmp_map[x][y - 1] != 1 && tmp_map[x][y - 1] != '#')
-		floodfill(info, tmp_map, x, y -1);
-	if (tmp_map[x][y + 1] != 1 && tmp_map[x][y + 1] != '#')
-		floodfill(info, tmp_map, x, y + 1);
+    if ((x == 0 || x >= info->row_count - 1 || y == 0 || y >= info->col_count - 1) && tmp_map[x][y] != WALL)
+        free_tmp_map(info, tmp_map, (int)info->row_count, "map not closed");
+    if (tmp_map[x][y] != WALL && tmp_map[x][y] != FILL)
+    {
+        tmp_map[x][y] = FILL;
+        floodfill(info, tmp_map, x - 1, y);
+        floodfill(info, tmp_map, x + 1, y);
+        floodfill(info, tmp_map, x, y - 1);
+        floodfill(info, tmp_map, x, y + 1);
+    }
 }
 
 static int	**init_tmp_map(t_info *info)
 {
-	int	**tmp_map;
-	int	cnt;
+	int **tmp_map;
+	int cnt;
 
 	cnt = 0;
-	tmp_map = (int **)malloc(sizeof(int *) * info->row_count);
+	tmp_map = malloc(sizeof(int *) * (int)info->row_count);
 	if (!(tmp_map))
 		free_exit(info, "Memory allocation error");
-	while (cnt < info->row_count)
+	while (cnt < (int)info->row_count)
 	{
-		tmp_map[cnt] = (int *)malloc(sizeof(int) * info->col_count);
+		tmp_map[cnt] = malloc(sizeof(int) * (int)info->col_count);
 		if (!(tmp_map[cnt]))
 			free_tmp_map(info, tmp_map, cnt, "Can't allocate mem");
 		cnt++;
@@ -51,8 +49,8 @@ static int	**init_tmp_map(t_info *info)
 void	check_closed_map(t_info *info, int x, int y)
 {
 	int	**tmp_map;
-	int	i;
-	int	j;
+	size_t  i;
+	size_t  j;
 
 	tmp_map = init_tmp_map(info);
 	i = 0;
@@ -67,5 +65,5 @@ void	check_closed_map(t_info *info, int x, int y)
 		i++;
 	}	
 	floodfill(info, tmp_map, x, y);
-	free_tmp_map(info, tmp_map, info->row_count, NULL);
+	free_tmp_map(info, tmp_map, (int)info->row_count, NULL);
 }

@@ -1,35 +1,30 @@
 #include "../includes/cub3d.h"
 #include "../libraries/libft/libft.h"
 #include "../libraries/minilibx_mms/mlx.h"
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 
 static void	filename_check(t_info *info, char *filename)
 {
-	int		start;
+	size_t  start;
 	int		fd;
 	char	*buf;
-	int		ret;
+	ssize_t  ret;
 
 	start = ft_strlen(filename) - 4;
 	if (ft_memcmp(&filename[start], ".cub", 4) != 0)
 		ft_failed_exit("The second argument should be a .cub file", NULL);
 	info->name = filename;
-	buf = malloc((int)10 + 1);
-	if (!buf)
-		ft_failed_exit("memory error", NULL);
-	fd = open(filename, O_RDONLY);
-	ret = read(fd, buf, 10);
+    fd = open(filename, O_RDONLY);
+    check_failed_fd(info, fd);
+	buf = malloc(10);
+    if (!buf)
+        ft_failed_exit("memory error", NULL);
+    ret = read(fd, buf, 10);
+    safe_free(buf);
+    close(fd);
 	if (ret == -1)
-	{
-		safe_free(buf);
-		close(fd);
 		ft_failed_exit("Check .cub file is correct type of file", NULL);
-	}
-	safe_free(buf);
-	close(fd);
 }
 
 static int	game_loop(t_info *info)

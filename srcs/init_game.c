@@ -1,7 +1,5 @@
 #include "../includes/cub3d.h"
 #include "../libraries/libft/libft.h"
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -33,54 +31,43 @@ void	init_pointers_keys(t_info *info)
 
 void	init_sprite_info(t_info *info)
 {
-	info->sp_buf = (double *)malloc(sizeof(double) * info->wid);
-	if (!(info->sp_buf))
+	info->sp_buf = malloc(sizeof(double) * info->wid);
+	info->sp_dist = malloc(sizeof(double) * info->sp_count);
+	info->sp_ordr = malloc(sizeof(int) * info->sp_count);
+	info->sprt = malloc(sizeof(t_d_vec) * info->sp_count);
+	info->sp_tex = malloc(sizeof(int) * info->sp_count);
+	if (!info->sp_buf || !info->sp_dist || !info->sp_ordr || !info->sprt || !info->sp_tex)
 		free_exit(info, "Memory allocation error");
-	info->sp_dist = (double *)malloc(sizeof(double) * info->sp_count);
-	if (!(info->sp_dist))
-		free_exit(info, "Memory allocation error");
-	info->sp_ordr = (int *)malloc(sizeof(int) * info->sp_count);
-	if (!(info->sp_ordr))
-		free_exit(info, "Memory allocation error");
-	info->sprt = (t_d_vec *)malloc(sizeof(t_d_vec) * info->sp_count);
-	if (!(info->sprt))
-		free_exit(info, "Memory allocation error");
-	info->sp_tex = (int *)malloc(sizeof(int) * info->sp_count);
-	if (!(info->sp_tex))
-		free_exit(info, "Memory allocation error");
+    ft_bzero(info->sp_buf, sizeof(double) * info->wid);
+    ft_bzero(info->sp_dist, sizeof(double) * info->sp_count);
+    ft_bzero(info->sp_ordr, sizeof(int) * info->sp_count);
+    ft_bzero(info->sprt, sizeof(t_d_vec) * info->sp_count);
+    ft_bzero(info->sp_tex, sizeof(int) * info->sp_count);
 }
 
 void	init_buf(t_info *info)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	info->buf = (int **)malloc(sizeof(int *) * info->hght);
+	info->buf = malloc(sizeof(int *) * info->hght);
 	if (!(info->buf))
 		free_exit(info, "Memory allocation error");
 	info->buf_flag++;
 	while (i < info->hght)
 	{
-		info->buf[i] = (int *)malloc(sizeof(int) * info->wid);
+		info->buf[i] = malloc(sizeof(int) * info->wid);
 		if (!(info->buf[i]))
 			free_exit(info, "Memory allocation error");
+        ft_bzero(info->buf[i], info->wid * sizeof(int));
 		info->buf_flag++;
-		i++;
-	}
-	i = 0;
-	while (i < info->hght)
-	{
-		j = 0;
-		while (j < info->wid)
-			info->buf[i][j++] = 0;
 		i++;
 	}
 }
 
 static void	count_col(t_info *info, char *line)
 {
-	int	len;
+	size_t  len;
 
 	len = ft_strlen(line);
 	if (len > info->col_count)
@@ -96,14 +83,14 @@ void	count_map_rows(t_info *info)
 	line = NULL;
 	fd = open(info->name, O_RDONLY);
 	check_failed_fd(info, fd);
-	while (is_not_map(line, fd, info))
+	while (!is_map_row(line, fd, info))
 	{
 		if (line != NULL)
 			safe_free(line);
 		ret = get_next_line(fd, &line);
 		check_failed_ret(info, line, fd, ret);
 	}
-	while (!(is_not_map(line, fd, info)))
+	while (is_map_row(line, fd, info))
 	{
 		info->row_count++;
 		count_col(info, line);

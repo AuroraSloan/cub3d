@@ -7,8 +7,8 @@ static void	set_start(t_info *info, char start, int fd, char *line)
 	if (info->start != '\0')
 		free_line(info, fd, line, "Multiple start information");
 	info->start = start;
-	info->pos.x = info->row + .5;
-	info->pos.y = info->col + .5;
+	info->pos.x = (int)info->row + .5;
+	info->pos.y = (int)info->col + .5;
 	if (info->start == 'N' || info->start == 'S')
 		init_n_s_vectors(info);
 	else if (info->start == 'W' || info->start == 'E')
@@ -18,11 +18,11 @@ static void	set_start(t_info *info, char start, int fd, char *line)
 
 static void	init_map_row(t_info *info, int fd, char *line)
 {
-	int	len;
+	size_t len;
 
 	info->col = 0;
 	len = ft_strlen(line);
-	info->map[info->row] = (int *)malloc(sizeof(int) * info->col_count);
+	info->map[info->row] = malloc(sizeof(int) * (int)info->col_count);
 	if (!(info->map[info->row]))
 		free_line(info, fd, line, "Memory allocation error");
 	info->map_flag++;
@@ -50,7 +50,7 @@ void	init_map(int ret, t_info *info, int fd, char *line)
 	info->start = '\0';
 	info->row = 0;
 	info->sp_count = 0;
-	info->map = (int **)malloc(sizeof(int *) * info->row_count);
+	info->map = malloc(sizeof(int *) * (int)info->row_count);
 	if (!(info->map))
 		free_line(info, fd, line, "Memory allocation error");
 	info->map_flag++;
