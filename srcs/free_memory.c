@@ -69,6 +69,12 @@ void	free_memory(t_info *info)
 		mlx_destroy_image(info->mlx, info->img.img);
 	if (info->win != NULL)
 		mlx_destroy_window(info->mlx, info->win);
-	if (info->mlx != NULL)	
-		safe_free(info->mlx);
+	if (info->mlx != NULL)
+    {
+        # ifdef __linux__
+        mlx_destroy_display(info->mlx);
+        mlx_loop_end(info->mlx);
+        # endif
+        safe_free(info->mlx);
+    }
 }

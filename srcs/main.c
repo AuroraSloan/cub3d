@@ -40,6 +40,8 @@ static int	game_loop(t_info *info)
 	mlx_string_put(info->mlx, info->win, info->wid - 30, 30,
 		0X00000000, number);
 	ft_free(number);
+    if (info->cucco == MABE_CUCCO_COUNT)
+        successful_exit(info);
 	number = NULL;
 	return (0);
 }

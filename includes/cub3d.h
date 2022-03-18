@@ -8,6 +8,7 @@
 # define MAP 3
 # define CUCCO 4
 # define FILL 5
+# define MABE_CUCCO_COUNT 15
 
 # ifdef __linux__
 #  define ESC 65307

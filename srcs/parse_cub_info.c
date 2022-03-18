@@ -16,7 +16,7 @@ static void	compare_resolution(t_info *info)
 	if (info->hght > screen_hight)
 		info->hght = screen_hight;
 }
-#endif
+# endif
 
 static void	cub_info_check(t_info *info, int fd, char *line)
 {

@@ -5,9 +5,11 @@
 int	successful_exit(t_info *info)
 {
 	free_memory(info);
-	if (info->bmp == 1)
+    if (info->bmp == 1)
 		printf("The image cub3D.bmp was successfully created\n");
-	else
+    else if (info->cucco == MABE_CUCCO_COUNT)
+        printf("Congratulations, you could save all of the cucco!\n");
+    else
 		printf("See you next time!\n");
 	exit(EXIT_SUCCESS);
 }
